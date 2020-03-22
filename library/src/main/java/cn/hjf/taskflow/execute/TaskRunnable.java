@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cn.hjf.taskflow.core.Task;
 import cn.hjf.taskflow.core.TaskCreator;
+import cn.hjf.taskflow.graph.GraphVisitor;
 
 /**
  * 执行Task的对象，被放到线程池中执行。
@@ -118,9 +119,8 @@ class TaskRunnable implements Runnable {
 
     private Object runTaskCreator() throws Exception {
         Object result = (mTask).process(mParams);
-        Task[] startAndEnd = (Task[]) result;
-        Task start = startAndEnd[0];
-        Task end = startAndEnd[1];
+        Task start = (Task) result;
+        Task end = GraphVisitor.findEnd(start);
 
         //每一个子节点变更父节点为end
         List<Task> nextList = mTask.getNextList();

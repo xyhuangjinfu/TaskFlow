@@ -18,9 +18,9 @@ class FuncCreatorTask1 extends TaskCreator {
 
     @NonNull
     @Override
-    protected Task[] createTask(Object... params) {
+    protected Task createTask(Object... params) {
         IFunc[] startAndEnd = mFuncCreator.createFunc(params[0]);
         Task task = cn.hjf.taskflow.util.TaskCreator.create(startAndEnd[0]);
-        return new Task[]{task, GraphVisitor.findEnd(task)};
+        return task;
     }
 }

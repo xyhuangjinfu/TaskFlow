@@ -19,5 +19,5 @@ public abstract class TaskCreator extends Task {
     }
 
     @NonNull
-    protected abstract Task[] createTask(Object... params);
+    protected abstract Task createTask(Object... params);
 }

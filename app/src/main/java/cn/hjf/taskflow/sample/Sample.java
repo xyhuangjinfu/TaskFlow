@@ -208,7 +208,7 @@ public class Sample {
         };
         TaskCreator queryFriendDetailTaskCreator = new TaskCreator("queryFriendDetailTaskCreator") {
             @Override
-            protected Task[] createTask(Object... params) {
+            protected Task createTask(Object... params) {
                 Log.e("O_O", "queryFriendDetailTaskCreator " + Thread.currentThread().getName());
                 List<Friend> list = (List<Friend>) params[0];
 
@@ -252,7 +252,7 @@ public class Sample {
                     query.before(end);
                 }
 
-                return new Task[]{start, end};
+                return start;
             }
         };
         Task mergeData = new Task("mergeData") {
@@ -372,7 +372,7 @@ public class Sample {
 //                .joinTo(queryUser, queryFriendList)
 //                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
 //                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
-//                .create();
+////                .create();
 //                TaskFlow.execute(f,new Callback() {
 //                    @Override
 //                    public void onComplete(Object o) {
@@ -385,11 +385,22 @@ public class Sample {
 //                    }
 //                });
 
-        IFunc<MergeData> f = new TaskFlow<MergeData>()
+        IFunc0<MergeData> f = (IFunc0<MergeData>) new TaskFlow<MergeData>()
                         .joinTo(queryUser, queryFriendList)
-//                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
-//                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
+                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
+                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
                 .create();
+        TaskFlow.execute(f, new Callback() {
+            @Override
+            public void onComplete(Object o) {
+                Log.e("O_O", o.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("O_O", e.getMessage());
+            }
+        });
 
 
     }
