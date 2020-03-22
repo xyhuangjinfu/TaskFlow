@@ -1,16 +1,23 @@
 package cn.hjf.taskflow.sample;
 
+import android.telecom.Call;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.hjf.taskflow.core.Task;
+import cn.hjf.taskflow.core.TaskCreator;
 import cn.hjf.taskflow.execute.Callback;
-import cn.hjf.taskflow.util.TaskFlow;
+import cn.hjf.taskflow.execute.Engine;
 import cn.hjf.taskflow.util.Func0;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func3;
 import cn.hjf.taskflow.util.FuncGraphBuilder;
 import cn.hjf.taskflow.util.IFunc1;
+import cn.hjf.taskflow.util.TaskFlow;
 
 public class Sample {
     class Vocab {
@@ -134,5 +141,137 @@ public class Sample {
                         Log.e("O_O", e.getMessage());
                     }
                 });
+    }
+
+    public void f2() {
+        class User {
+            String name;
+
+            public User(String name) {
+                this.name = name;
+            }
+        }
+        class Friend {
+            String name;
+
+            public Friend(String name) {
+                this.name = name;
+            }
+        }
+        class FriendDetail {
+            Friend mFriend;
+            String comment;
+
+            public FriendDetail(Friend friend, String comment) {
+                mFriend = friend;
+                this.comment = comment;
+            }
+        }
+        class MergeData {
+            User mUser;
+            List<FriendDetail> mFriendDetails;
+
+            public MergeData(User user, List<FriendDetail> friendDetails) {
+                mUser = user;
+                mFriendDetails = friendDetails;
+            }
+        }
+
+        Task queryUser = new Task("queryUser") {
+            @NonNull
+            @Override
+            public Object process(Object... params) throws Exception {
+                Log.e("O_O", "queryUser " + Thread.currentThread().getName());
+                return new User("hjf");
+            }
+        };
+        Task queryFriendList = new Task("queryFriendList") {
+            @NonNull
+            @Override
+            public Object process(Object... params) throws Exception {
+                Log.e("O_O", "queryFriendList " + Thread.currentThread().getName());
+                List<Friend> list = new ArrayList<>();
+                list.add(new Friend("fa"));
+                list.add(new Friend("fb"));
+                list.add(new Friend("fc"));
+                return list;
+            }
+        };
+        TaskCreator queryFriendDetailTaskCreator = new TaskCreator("queryFriendDetailTaskCreator") {
+            @Override
+            protected Task[] createTask(Object... params) {
+                Log.e("O_O", "queryFriendDetailTaskCreator " + Thread.currentThread().getName());
+                List<Friend> list = (List<Friend>) params[0];
+
+                Task start = new Task("start") {
+                    @NonNull
+                    @Override
+                    public Object process(Object... params) throws Exception {
+                        Log.e("O_O", "start " + Thread.currentThread().getName());
+                        return params[0];
+                    }
+                };
+                Task end = new Task("end") {
+                    @NonNull
+                    @Override
+                    public Object process(Object... params) throws Exception {
+                        Log.e("O_O", "end " + Thread.currentThread().getName());
+                        List<FriendDetail> l = new ArrayList<>();
+                        for (Object o : params) {
+                            FriendDetail f = (FriendDetail) o;
+                            l.add(f);
+                        }
+                        return l;
+                    }
+                };
+
+                int num = 0;
+                for (Friend o : list) {
+                    num++;
+                    final Friend f = (Friend) o;
+
+                    Task query = new Task("query " + num) {
+                        @NonNull
+                        @Override
+                        public Object process(Object... params) throws Exception {
+                            Log.e("O_O", "query " + Thread.currentThread().getName());
+                            return new FriendDetail(f, "xxx");
+                        }
+                    };
+
+                    start.before(query);
+                    query.before(end);
+                }
+
+                return new Task[]{start, end};
+            }
+        };
+        Task mergeData = new Task("mergeData") {
+            @NonNull
+            @Override
+            public Object process(Object... params) throws Exception {
+                Log.e("O_O", "mergeData " + Thread.currentThread().getName());
+                return new MergeData((User) params[0], (List<FriendDetail>) params[1]);
+            }
+        };
+
+        queryUser.before(queryFriendList);
+        queryFriendList.before(queryFriendDetailTaskCreator);
+
+        queryUser.before(mergeData);
+        queryFriendDetailTaskCreator.before(mergeData);
+
+        Engine.execute(queryUser, new Callback() {
+            @Override
+            public void onComplete(Object o) {
+                Log.e("O_O", o.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("O_O", e.getMessage());
+            }
+        });
+
     }
 }

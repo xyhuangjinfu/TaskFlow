@@ -1,10 +1,13 @@
 package cn.hjf.taskflow.execute;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.hjf.taskflow.core.Task;
+import cn.hjf.taskflow.core.TaskCreator;
 
 /**
  * 执行Task的对象，被放到线程池中执行。
@@ -16,6 +19,7 @@ class TaskRunnable implements Runnable {
     private final Task mTask;
     private final Session mSession;
     private Map<Long, Object> mParamMap = new HashMap<>();
+    private Object[] mParams;
 
     public TaskRunnable(Session session, Task task) {
         mTask = task;
@@ -32,6 +36,10 @@ class TaskRunnable implements Runnable {
     public synchronized boolean addParam(long preTaskId, Object param) {
         mParamMap.put(preTaskId, param);
         return mParamMap.size() == mTask.getPreList().size();
+    }
+
+    private void setParams(Object[] params) {
+        mParams = params;
     }
 
     @Override
@@ -57,14 +65,51 @@ class TaskRunnable implements Runnable {
 
     private Object runTask() throws Exception {
         //准备参数，需要注意参数的传递顺序
-        List<Task> preTaskList = mTask.getPreList();
-        Object[] params = new Object[preTaskList.size()];
-        for (int i = 0; i < params.length; i++) {
-            params[i] = mParamMap.get((preTaskList.get(i)).getId());
+        if (mParams == null) {
+            List<Task> preTaskList = mTask.getPreList();
+            mParams = new Object[preTaskList.size()];
+            for (int i = 0; i < mParams.length; i++) {
+                mParams[i] = mParamMap.get((preTaskList.get(i)).getId());
+            }
         }
 
-        //执行任务
-        Object result = mTask.process(params);
+
+        Object result;
+        if (mTask instanceof TaskCreator) {
+            result = (mTask).process(mParams);
+            Task[] startAndEnd = (Task[]) result;
+            Task start = startAndEnd[0];
+            Task end = startAndEnd[1];
+
+            //每一个子节点变更父节点为end
+            List<Task> nextList = mTask.getNextList();
+            for (Task nextTask : nextList) {
+                List<Task> preListOfNextList = nextTask.getPreList();
+                int index = preListOfNextList.indexOf(mTask);
+                preListOfNextList.remove(index);
+                preListOfNextList.add(index, end);
+            }
+            //end引用当前节点的所有子节点
+            end.setNextList(mTask.getNextList());
+//            mTask.getNextList().clear();
+
+            //run start
+            TaskRunnable startTaskRunnable = TaskRunnablePool.getOrCreate(mSession, start);
+            startTaskRunnable.setParams(mParams);
+            TaskRunnablePool.remove(mSession, start);
+
+            //做一次取消状态检测
+            if (!mSession.isCanceled()) {
+                Log.e("XXX", mTask + " -> " + start);
+                Engine.execute(startTaskRunnable);
+            } else {
+                TaskRunnablePool.remove(mSession);
+            }
+            return null;
+        } else {
+            //执行任务
+            result = mTask.process(mParams);
+        }
 
         //操作子任务
         for (Task nextTask : mTask.getNextList()) {
@@ -77,6 +122,7 @@ class TaskRunnable implements Runnable {
 
                 //做一次取消状态检测
                 if (!mSession.isCanceled()) {
+                    Log.e("XXX", mTask + " -> " + nextTask);
                     Engine.execute(nextTaskRunnable);
                 } else {
                     TaskRunnablePool.remove(mSession);
