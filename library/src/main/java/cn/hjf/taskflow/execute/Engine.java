@@ -21,11 +21,12 @@ public class Engine {
      * @param callback
      * @return
      */
-    public static Session execute(@NonNull Task task, @NonNull Callback callback) {
+    public static Session execute(@NonNull Task task, @NonNull Callback callback, Object... params) {
         checkTaskGraph(task);
 
         Session session = new Session(callback);
-        sExecutorService.submit(new TaskRunnable(session, task));
+        TaskRunnable taskRunnable = new TaskRunnable(session, task);
+        sExecutorService.submit(taskRunnable);
         return session;
     }
 

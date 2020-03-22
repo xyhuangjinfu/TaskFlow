@@ -5,11 +5,7 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.execute.Engine;
 import cn.hjf.taskflow.execute.Session;
 
-public final class TaskFlow {
-
-    public static TaskFlow create() {
-        return new TaskFlow();
-    }
+public final class TaskFlow<R> {
 
     /**
      * ***************************************************************************************************************
@@ -18,9 +14,6 @@ public final class TaskFlow {
      */
 
     private RealFuncGraphBuilder mRealBuilder = new RealFuncGraphBuilder();
-
-    private TaskFlow() {
-    }
 
     /**
      * ***************************************************************************************************************
@@ -39,52 +32,52 @@ public final class TaskFlow {
      * ***************************************************************************************************************
      */
 
-    public <R1, R> TaskFlow joinTo(IFunc<R1> f1, IFunc1<R1, R> joinTo) {
+    public <R1> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc1<R1, ?> joinTo) {
         mRealBuilder.joinTo(f1, joinTo);
         return this;
     }
 
-    public <R1, R2, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc2<R1, R2, R> joinTo) {
+    public <R1, R2> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc2<R1, R2, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc3<R1, R2, R3, R> joinTo) {
+    public <R1, R2, R3> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc3<R1, R2, R3, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc4<R1, R2, R3, R4, R> joinTo) {
+    public <R1, R2, R3, R4> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc4<R1, R2, R3, R4, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc5<R1, R2, R3, R4, R5, R> joinTo) {
+    public <R1, R2, R3, R4, R5> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc5<R1, R2, R3, R4, R5, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc6<R1, R2, R3, R4, R5, R6, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc6<R1, R2, R3, R4, R5, R6, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc7<R1, R2, R3, R4, R5, R6, R7, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, f9, joinTo);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> TaskFlow joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10, IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10, IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> joinTo) {
         mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, joinTo);
         return this;
     }
@@ -95,11 +88,95 @@ public final class TaskFlow {
      * ***************************************************************************************************************
      */
 
-    public <T> Session execute(Callback<T> callback) {
+    public IFunc<R> create() {
         FuncGraphBuilder funcGraphBuilder = new FuncGraphBuilder(mRealBuilder);
         IFunc func = funcGraphBuilder.create();
-        Task startTask = new TaskCreator().create(func);
+        return func;
+    }
+
+    /**
+     * ***************************************************************************************************************
+     * <p>
+     * ***************************************************************************************************************
+     */
+
+//    public <T> Session execute(Callback<T> callback) {
+//        FuncGraphBuilder funcGraphBuilder = new FuncGraphBuilder(mRealBuilder);
+//        IFunc func = funcGraphBuilder.create();
+//        Task startTask = new TaskCreator().create(func);
+//        return Engine.execute(startTask, callback);
+//    }
+    public static <R> Session execute(IFunc<R> func, Callback<R> callback) {
+        if (func instanceof IFunc0) {
+            return execute((IFunc0) func, callback);
+        }
+
+        throw new IllegalArgumentException("unsupported func type : " + func.getClass().getName());
+    }
+
+    public static <R> Session execute(IFunc0<R> func, Callback<R> callback) {
+        Task startTask = getTask(func);
         return Engine.execute(startTask, callback);
+    }
+
+    public static <P, R> Session execute(IFunc1<P, R> func, Callback<R> callback, P p) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p);
+    }
+
+    public static <P1, P2, R> Session execute(IFunc2<P1, P2, R> func, Callback<R> callback, P1 p1, P2 p2) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2);
+    }
+
+    public static <P1, P2, P3, R> Session execute(IFunc3<P1, P2, P3, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3);
+    }
+
+    public static <P1, P2, P3, P4, R> Session execute(IFunc4<P1, P2, P3, P4, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4);
+    }
+
+    public static <P1, P2, P3, P4, P5, R> Session execute(IFunc5<P1, P2, P3, P4, P5, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5);
+    }
+
+    public static <P1, P2, P3, P4, P5, P6, R> Session execute(IFunc6<P1, P2, P3, P4, P5, P6, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5, p6);
+    }
+
+    public static <P1, P2, P3, P4, P5, P6, P7, R> Session execute(IFunc7<P1, P2, P3, P4, P5, P6, P7, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    public static <P1, P2, P3, P4, P5, P6, P7, P8, R> Session execute(IFunc8<P1, P2, P3, P4, P5, P6, P7, P8, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+
+    public static <P1, P2, P3, P4, P5, P6, P7, P8, P9, R> Session execute(IFunc9<P1, P2, P3, P4, P5, P6, P7, P8, P9, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    public static <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, R> Session execute(IFunc10<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, R> func, Callback<R> callback, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7, P8 p8, P9 p9, P10 p10) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+    }
+
+    public static <R> Session execute(IFuncN<R> func, Callback<R> callback, Object... params) {
+        Task startTask = getTask(func);
+        return Engine.execute(startTask, callback, params);
+    }
+
+    private static Task getTask(IFunc func) {
+        Task startTask = new TaskCreator().create(func);
+        return startTask;
     }
 
     /**

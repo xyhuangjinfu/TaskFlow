@@ -41,7 +41,7 @@ class TaskRunnable implements Runnable {
      *
      * @param params
      */
-    private synchronized void setParams(Object[] params) {
+    public synchronized void setParams(Object[] params) {
         mParams = params;
     }
 

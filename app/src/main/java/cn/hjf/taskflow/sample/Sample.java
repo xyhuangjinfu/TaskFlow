@@ -129,15 +129,14 @@ public class Sample {
 //					}
 //				});
 
-        TaskFlow.create()
-//				.joinTo(fetchVocab, fetchExample)
-//				.joinTo(fetchExample, transExample)
+        IFunc0<SearchData> f = (IFunc0<SearchData>) new TaskFlow()
 
                 .joinTo(fetchVocab, fetchAndTransExample)
 
                 .joinTo(fetchVocab, fetchFavorite)
                 .joinTo(fetchVocab, fetchAndTransExample, fetchFavorite, mergeData)
-                .execute(new Callback<SearchData>() {
+                .create();
+                TaskFlow.execute(f, new Callback<SearchData>() {
                     @Override
                     public void onComplete(SearchData o) {
                         Log.e("O_O", o.s);
@@ -369,21 +368,29 @@ public class Sample {
             }
         };
 
-        TaskFlow.create()
-                .joinTo(queryUser, queryFriendList)
-                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
-                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
-                .execute(new Callback() {
-                    @Override
-                    public void onComplete(Object o) {
-                        Log.e("O_O", o.toString());
-                    }
+//        IFunc<MergeData> f = new TaskFlow<SearchData>()
+//                .joinTo(queryUser, queryFriendList)
+//                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
+//                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
+//                .create();
+//                TaskFlow.execute(f,new Callback() {
+//                    @Override
+//                    public void onComplete(Object o) {
+//                        Log.e("O_O", o.toString());
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("O_O", e.getMessage());
+//                    }
+//                });
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("O_O", e.getMessage());
-                    }
-                });
+        IFunc<MergeData> f = new TaskFlow<MergeData>()
+                        .joinTo(queryUser, queryFriendList)
+//                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
+//                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
+                .create();
+
 
     }
 }
