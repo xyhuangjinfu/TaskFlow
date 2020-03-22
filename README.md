@@ -163,7 +163,7 @@ fn.after(fn-1);
 ```
 Because we need to check parameter's type, number and order of the input, so we choose the input point to build our graph, so every node should be joined only once. When you are coding, the order of multiple `joinTo` have no matter.
 
-#### 7、使用Func图来构建Task图：
+#### 7、create task graph from func graph.
 ```
         Task task = new TaskBuilder().create(funcGraph);
 ```
