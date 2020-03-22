@@ -2,6 +2,7 @@ package cn.hjf.taskflow.graph;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,14 +12,33 @@ import java.util.Set;
 public class GraphVisitor {
 
     public static <E extends IVertex> E findEnd(E start) {
-        E end = start;
+        final List<E> result = new ArrayList<>();
 
-        while (!start.getNextList().isEmpty()) {
-            start = (E) start.getNextList().get(0);
-            end = start;
-        }
+        dfsForward(start, new OnVisitListener<E>() {
+            @Override
+            public void onStart() {
 
-        return end;
+            }
+
+            @Override
+            public void onVisit(E e) {
+                if (e.getNextList().isEmpty()) {
+                    result.add(e);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public boolean stop() {
+                return !result.isEmpty();
+            }
+        });
+
+        return result.get(0);
     }
 
     /**
