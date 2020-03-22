@@ -102,14 +102,14 @@ In addition to primitive operator `before`, we also provide anther primitive ope
 ## Extend Module, Utils
 Above are the most basic of this framework, theoretically you can build any logic for your data process work, but you can find that it's difficult to build a graph, something as parameters's numbers, types, the valid of a graph, etc... so we provide some util to resolve those problems.
 
-#### 5、使用Func来替代Task：
-`task`是无类型的，输入输出全是`Object`类型，只有在运行时才能检测出类型和个数问题，`func`体系提供了泛型机制。
+#### 5、use Func instead Task.
+`task` is typeless，the only one type is `Object`, when in runtime we can check those problems, but `Func` provide the generic type.
 
-`Func0`代表0个输入，`Func1`代表1个输入，以此类推。目前我们框架内部内置最大支持`9`个。如果有极个别需求超出限制，使用`Task`机制。
+`Func0` means it have zero input, `Func1` means one input, and so on.
 
-最终会有工具把`Func`图转换为`Task`图，然后可以被引擎执行。
+Finally some util can transfer a `Func` graph into a `Task` graph, which can be executed by `Engine`.
 
-创建一个接收一个`String`，返回一个`Integer`的`Func`：
+Below we create a `Func` which receive a `String` type parameter and output a `Integer` result.
 ```
         Func1<String, Integer> f = new Func1<String, Integer>() {
             @NonNull
