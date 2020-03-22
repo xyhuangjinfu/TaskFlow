@@ -2,6 +2,11 @@ package cn.hjf.taskflow.core;
 
 import androidx.annotation.NonNull;
 
+/**
+ * A special type task, which can create task or task graph at runtime. so it provide the ability to create tasks dynamic.
+ * <p>
+ * When at those situation that the number of tasks can be decided after do some calculate, this will be useful.
+ */
 public abstract class TaskCreator extends Task {
 
     public TaskCreator() {
@@ -18,6 +23,12 @@ public abstract class TaskCreator extends Task {
         return createTask(params);
     }
 
+    /**
+     * Create task or task graph dynamically.
+     *
+     * @param params
+     * @return
+     */
     @NonNull
-    protected abstract Task createTask(Object... params);
+    public abstract Task createTask(Object... params);
 }

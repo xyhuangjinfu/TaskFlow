@@ -27,17 +27,26 @@ public abstract class Task extends AbsVertex<Task> {
 
     private static final AtomicLong sIdGenerator = new AtomicLong(0);
 
-    private final long mId;
     private final String mName;
+    private final long mId;
 
     public Task() {
-        mId = sIdGenerator.getAndIncrement();
-        mName = "Task-" + mId;
+        this(null);
     }
 
     public Task(String name) {
         mId = sIdGenerator.getAndIncrement();
-        mName = name;
+        mName = name == null ? "Task-" + mId : name;
+    }
+
+    /**
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
+
+    public String getName() {
+        return mName;
     }
 
     public long getId() {
@@ -56,16 +65,17 @@ public abstract class Task extends AbsVertex<Task> {
                 ", mName='" + mName + '\'' +
                 '}';
     }
-/**
- * ***************************************************************************************************************
- * //
- * ***************************************************************************************************************
- */
 
     /**
-     * 覆写该方法来指定该Task的执行逻辑
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
+
+    /**
+     * Override this method to do some work which will be executed when this task runs.
      *
-     * @param params 输入参数列表
+     * @param params
      * @return
      * @throws Exception
      */
