@@ -40,6 +40,15 @@ class FuncTaskCreator {
         if (func instanceof Func10) {
             return FuncTaskCreator.create10((Func10) func);
         }
+        if (func instanceof FuncN) {
+            return FuncTaskCreator.createN((FuncN) func);
+        }
+        if (func instanceof FuncCreator1) {
+            return FuncTaskCreator.createFuncCreator1((FuncCreator1) func);
+        }
+        if (func instanceof FuncCreator3) {
+            return FuncTaskCreator.createFuncCreator3((FuncCreator3) func);
+        }
 
         throw new RuntimeException("unsupported func type : " + func.getClass().getName());
     }
@@ -92,6 +101,18 @@ class FuncTaskCreator {
 
     private static Task create10(Func10 func) {
         return new FuncTask10(func);
+    }
+    private static Task createN(FuncN func) {
+        return new FuncTaskN(func);
+    }
+
+
+    private static Task createFuncCreator1(FuncCreator1 func) {
+        return new FuncCreatorTask1(func);
+    }
+
+    private static Task createFuncCreator3(FuncCreator3 func) {
+        return new FuncCreatorTask3(func);
     }
 
     /**

@@ -21,9 +21,9 @@ class TaskCreator {
     public static Task create(@NonNull IFunc func) {
         checkNonNull(func);
 
-        if (!func.getNextList().isEmpty()) {
-            throw new IllegalArgumentException("func is not a single node");
-        }
+//        if (!func.getNextList().isEmpty()) {
+//            throw new IllegalArgumentException("func is not a single node");
+//        }
 
         //展开Func图（Func图中可能有复合Func）
         IFunc end = traverseAndExpand(func)[1];

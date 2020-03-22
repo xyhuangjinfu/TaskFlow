@@ -14,9 +14,16 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.execute.Engine;
 import cn.hjf.taskflow.util.Func0;
 import cn.hjf.taskflow.util.Func1;
+import cn.hjf.taskflow.util.Func2;
 import cn.hjf.taskflow.util.Func3;
+import cn.hjf.taskflow.util.FuncCreator1;
 import cn.hjf.taskflow.util.FuncGraphBuilder;
+import cn.hjf.taskflow.util.FuncN;
+import cn.hjf.taskflow.util.IFunc;
+import cn.hjf.taskflow.util.IFunc0;
 import cn.hjf.taskflow.util.IFunc1;
+import cn.hjf.taskflow.util.IFunc2;
+import cn.hjf.taskflow.util.IFuncN;
 import cn.hjf.taskflow.util.TaskFlow;
 
 public class Sample {
@@ -143,39 +150,42 @@ public class Sample {
                 });
     }
 
+    class User {
+        String name;
+
+        public User(String name) {
+            this.name = name;
+        }
+    }
+    class Friend {
+        String name;
+
+        public Friend(String name) {
+            this.name = name;
+        }
+    }
+    class FriendDetail {
+        Friend mFriend;
+        String comment;
+
+        public FriendDetail(Friend friend, String comment) {
+            mFriend = friend;
+            this.comment = comment;
+        }
+    }
+    class MergeData {
+        User mUser;
+        List<FriendDetail> mFriendDetails;
+
+        public MergeData(User user, List<FriendDetail> friendDetails) {
+            mUser = user;
+            mFriendDetails = friendDetails;
+        }
+    }
+
+
     public void f2() {
-        class User {
-            String name;
 
-            public User(String name) {
-                this.name = name;
-            }
-        }
-        class Friend {
-            String name;
-
-            public Friend(String name) {
-                this.name = name;
-            }
-        }
-        class FriendDetail {
-            Friend mFriend;
-            String comment;
-
-            public FriendDetail(Friend friend, String comment) {
-                mFriend = friend;
-                this.comment = comment;
-            }
-        }
-        class MergeData {
-            User mUser;
-            List<FriendDetail> mFriendDetails;
-
-            public MergeData(User user, List<FriendDetail> friendDetails) {
-                mUser = user;
-                mFriendDetails = friendDetails;
-            }
-        }
 
         Task queryUser = new Task("queryUser") {
             @NonNull
@@ -272,6 +282,108 @@ public class Sample {
                 Log.e("O_O", e.getMessage());
             }
         });
+
+    }
+
+
+
+    public void f3() {
+        IFunc0<User> queryUser = new Func0<User>("queryUser") {
+            @NonNull
+            @Override
+            public User process() throws Exception {
+                Log.e("O_O", "queryUser " + Thread.currentThread().getName());
+                return new User("hjf");
+            }
+        };
+        IFunc1<User, List<Friend>> queryFriendList = new Func1<User, List<Friend>>("queryFriendList") {
+            @NonNull
+            @Override
+            public List<Friend> process(User u) throws Exception {
+                Log.e("O_O", "queryFriendList " + Thread.currentThread().getName());
+                List<Friend> list = new ArrayList<>();
+                list.add(new Friend("fa" + u.name));
+                list.add(new Friend("fb" + u.name));
+                list.add(new Friend("fc" + u.name));
+                return list;
+            }
+        };
+
+        IFunc1<List<Friend>, List<FriendDetail>> queryFriendDetailTaskCreator = new FuncCreator1<List<Friend>, List<FriendDetail>>("queryFriendDetailTaskCreator") {
+            @Override
+            protected IFunc[] createFunc(List<Friend> p) {
+                Log.e("O_O", "queryFriendDetailTaskCreator " + Thread.currentThread().getName());
+
+                IFunc1<List<Friend>,List<Friend>> start = new Func1<List<Friend>, List<Friend>>("start") {
+                    @NonNull
+                    @Override
+                    public List<Friend> process(List<Friend> friendList) throws Exception {
+                        Log.e("O_O", "start " + Thread.currentThread().getName());
+                        return friendList;
+                    }
+                };
+                IFuncN<List<FriendDetail>> end = new FuncN<List<FriendDetail>>("end") {
+                    @NonNull
+                    @Override
+                    public List<FriendDetail> process(Object... params) throws Exception {
+                        Log.e("O_O", "end " + Thread.currentThread().getName());
+                        List<FriendDetail> l = new ArrayList<>();
+                        for (Object o : params) {
+                            FriendDetail f = (FriendDetail) o;
+                            l.add(f);
+                        }
+                        return l;
+                    }
+                };
+
+                int num = 0;
+                for (Friend o : p) {
+
+
+                    final int index = num;
+                    IFunc1<List<Friend>, FriendDetail> query = new Func1<List<Friend>, FriendDetail>("query " + num) {
+                        @NonNull
+                        @Override
+                        public FriendDetail process(List<Friend> f) throws Exception {
+                            Log.e("O_O", "query " + Thread.currentThread().getName());
+                            return new FriendDetail(f.get(index), "xxx");
+                        }
+                    };
+
+                    start.before(query);
+                    query.before(end);
+
+                    num++;
+                }
+
+                return new IFunc[]{start, end};
+            }
+        };
+
+        IFunc2<User, List<FriendDetail>, MergeData> mergeData = new Func2<User, List<FriendDetail>, MergeData>("mergeData") {
+            @NonNull
+            @Override
+            public MergeData process(User u, List<FriendDetail> l) throws Exception {
+                Log.e("O_O", "mergeData " + Thread.currentThread().getName());
+                return new MergeData(u, l);
+            }
+        };
+
+        TaskFlow.create()
+                .joinTo(queryUser, queryFriendList)
+                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
+                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
+                .execute(new Callback() {
+                    @Override
+                    public void onComplete(Object o) {
+                        Log.e("O_O", o.toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("O_O", e.getMessage());
+                    }
+                });
 
     }
 }
