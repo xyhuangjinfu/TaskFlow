@@ -99,8 +99,8 @@ In addition to primitive operator `before`, we also provide anther primitive ope
 
 
 
-## extend module, utils
-上面描述了这个框架的最基本构建，理论上，你可以构建出你想要的任意数据流处理逻辑，但是你应该能发现，构建一个复杂的任务流，难度很大，包括但不限于 参数个数及类型的安全、连接原语的细粒度、任务图的合法性（单顶点有向无环）检查。所以我们提供了工具包，来解决相应的问题。
+## Extend Module, Utils
+Above are the most basic of this framework, theoretically you can build any logic for your data process work, but you can find that it's difficult to build a graph, something as parameters's numbers, types, the valid of a graph, etc... so we provide some util to resolve those problems.
 
 #### 5、使用Func来替代Task：
 `task`是无类型的，输入输出全是`Object`类型，只有在运行时才能检测出类型和个数问题，`func`体系提供了泛型机制。
@@ -119,51 +119,41 @@ In addition to primitive operator `before`, we also provide anther primitive ope
             }
         };
 ```
-#### 6、使用图构建工具来构建图：
-之前我们使用`before`或者`after`原语来构建任务图，`Func`体系也有一样的原语来构建`Func`图。但我们一般不使用，因为我们无法保证构建出一张合法图，所以我们提供了图构建工具。
-
-构建一个查词框任务图：
+#### 6、use graph builder to build graph.
+Build a graph corresponding to chapter 4.
 ```
-        Func1<String, Vocab> fetchVocab = new Func1<String, Vocab>() {
+        Func1<String, UserInfo> queryUserInfo = new Func1<String, UserInfo>() {
             @NonNull
             @Override
-            protected Vocab process(String s) throws Exception {
-                return new Vocab();
+            protected UserInfo process(String s) throws Exception {
+                return new UserInfo();
             }
         };
-        Func1<Vocab, Example> fetchExample = new Func1<Vocab, Example>() {
+        Func1<UserInfo, List<Friend>> queryFriendList = new Func1<UserInfo, List<Friend>>() {
             @NonNull
             @Override
-            protected Example process(Vocab v) throws Exception {
-                return new Example();
+            protected List<Friend> process(UserInfo v) throws Exception {
+                return new ArrayList<Friend>();
             }
         };
-        Func1<Vocab, Favorite> fetchFavorite = new Func1<Vocab, Favorite>() {
+        Func2<UserInfo, List<Friend>, SearchData> mergeData = new Func2<UserInfo, List<Friend>, SearchData>() {
             @NonNull
             @Override
-            protected Favorite process(Vocab v) throws Exception {
-                return new Favorite();
-            }
-        };
-        Func3<Vocab, Example, Favorite, SearchData> mergeData = new Func3<Vocab, Example, Favorite, SearchData>() {
-            @NonNull
-            @Override
-            protected SearchData process(Vocab vocab, Example example, Favorite favorite) throws Exception {
+            protected SearchData process(UserInfo u, List<Friend> l) throws Exception {
                 return new SearchData();
             }
         };
 
         Func funcGraph = new FuncGraphBuilder()
-                .joinTo(fetchVocab, fetchExample)
-                .joinTo(fetchVocab, fetchFavorite)
-                .joinTo(fetchVocab, fetchExample, fetchFavorite, mergeData)
+                .joinTo(queryUserInfo, queryFriendList)
+                .joinTo(queryUserInfo, queryFriendList, mergeData)
                 .create();
 ```
-使用`FuncGraphBuilder`来构建图，最后`create`的时候，会做图的合法性检查。`joinTo`语义为：
+Use `FuncGraphBuilder` to build graph, finally when `create`, it will check it's a valid graph now. the definition of `joinTo` is:
 ```
 joinTo(f1, f2, f3, f4,....,fn-1, fn)
 ```
-等价于：
+equals:
 ```
 fn.after(f1);
 fn.after(f2);
@@ -171,7 +161,7 @@ fn.after(f3);
 .....
 fn.after(fn-1);
 ```
-因为需要做参数类型、个数、顺序的检查，所以我们选择了输入点来实现该功能，所以每个节点只能被 `joinTo` `1`次，编码时，多个`joinTo`的顺序没有实际意义，不影响数据流向。
+Because we need to check parameter's type, number and order of the input, so we choose the input point to build our graph, so every node should be joined only once. When you are coding, the order of multiple `joinTo` have no matter.
 
 #### 7、使用Func图来构建Task图：
 ```
