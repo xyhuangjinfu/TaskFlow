@@ -48,6 +48,8 @@ class TaskRunnable implements Runnable {
     }
 
     private void internalRun() {
+        final boolean isEndTask = isEndTask();
+
         if (mSession.isCanceled()) {
             TaskRunnablePool.remove(mSession);
             return;
@@ -55,7 +57,7 @@ class TaskRunnable implements Runnable {
 
         try {
             Object result = runTask();
-            if (isEndTask()) {
+            if (isEndTask) {
                 mSession.onFinish(result, null);
             }
         } catch (Exception e) {
@@ -91,7 +93,7 @@ class TaskRunnable implements Runnable {
             }
             //end引用当前节点的所有子节点
             end.setNextList(mTask.getNextList());
-//            mTask.getNextList().clear();
+            mTask.getNextList().clear();
 
             //run start
             TaskRunnable startTaskRunnable = TaskRunnablePool.getOrCreate(mSession, start);
