@@ -7,22 +7,21 @@ import java.util.concurrent.atomic.AtomicLong;
 import cn.hjf.taskflow.graph.AbsVertex;
 
 /**
- * 用来被执行的最小单元，每个Task的属性：
- * 1、[0...N]个输入。
- * 2、有且仅有1个输出。
+ * The smallest unit which can be executed. The attribute of every task are below:
+ * 1.Number of input is [0...N], N is positive infinite.
+ * 2.Number of output is 1.
  * <p>
- * Task之间可以被连接，前一个Task的输出成为后一个Task的输入，多个Task连接后，成为一张Task图。
- * 一个合法的Task图的属性：
- * 1、仅有1个 start 任务。
- * 2、仅有1个 end 任务。
- * 3、有向无环图。
+ * Tasks can be composed to a task graph, when two task connect, the previous task's output become the next task's input,
+ * the attribute of a valid graph are below:
+ * 1.Have one start task, which receive input for this graph.
+ * 2.Have one end task, which output the result for this graph.
+ * 3.Directed acyclic graph.
  * <p>
- * 一个Task图可以作为一个组合任务，与其他Task进行连接，形成更大的任务图。
- * Task图的输入由 start 节点接收，输出由 end 节点输出。
+ * We use the start task to express a graph, for example:
+ * 1.t1 -> t2 -> t3, this graph is t1.
+ * 2.t1, this is a single task, and of course it is a valid graph depend on the task graph's definition, this graph is also t1.
  * <p>
- * Task图的表示方式，使用start节点表示：
- * 1、t1->t2->t3，使用t1表示整个任务图。
- * 2、t1，使用t1表示整个单节点任务图。
+ * Tasks and Graphs can be composed to more larger Graphs.
  */
 public abstract class Task extends AbsVertex<Task> {
 
