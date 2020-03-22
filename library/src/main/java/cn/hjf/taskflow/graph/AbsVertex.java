@@ -5,8 +5,6 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hjf.taskflow.core.Task;
-
 public abstract class AbsVertex<E extends IVertex> implements IVertex<E> {
 
     private List<E> mNextList = new ArrayList<>();
@@ -24,23 +22,22 @@ public abstract class AbsVertex<E extends IVertex> implements IVertex<E> {
         this.getPreList().add(pre);
     }
 
-    public void deleteBefore(E next) {
-
-    }
-
-    public void deleteAfter(E pre) {
-
-    }
-
-    public void setNextList(List<E> nextList) {
-        mNextList.clear();
-        mNextList.addAll(nextList);
+    @Override
+    public void setPreList(@NonNull List<E> preList) {
+        mPreList.clear();
+        mPreList.addAll(preList);
     }
 
     @NonNull
     @Override
     public List<E> getPreList() {
         return mPreList;
+    }
+
+    @Override
+    public void setNextList(@NonNull List<E> nextList) {
+        mNextList.clear();
+        mNextList.addAll(nextList);
     }
 
     @NonNull

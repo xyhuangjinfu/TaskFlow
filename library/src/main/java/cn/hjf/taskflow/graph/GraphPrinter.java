@@ -9,7 +9,7 @@ public final class GraphPrinter {
     private static final String TAG = "GraphPrinter";
 
     public static <E extends IVertex> void printForward(E start) {
-        Log.e(TAG, "-----------------------------------------------------------------------");
+        Log.e(TAG, "printForward -----------------------------------------------------------------------");
         GraphVisitor.bfsForward(start, new OnVisitListener<E>() {
             @Override
             public void onStart() {
@@ -32,7 +32,7 @@ public final class GraphPrinter {
     }
 
     public static <E extends IVertex> void printBackward(E end) {
-        Log.e(TAG, "-----------------------------------------------------------------------");
+        Log.e(TAG, "printBackward -----------------------------------------------------------------------");
         GraphVisitor.bfsBackward(end, new OnVisitListener<E>() {
             @Override
             public void onStart() {
