@@ -208,7 +208,7 @@ public class Sample {
         };
         TaskCreator queryFriendDetailTaskCreator = new TaskCreator("queryFriendDetailTaskCreator") {
             @Override
-            protected Task createTask(Object... params) {
+            public Task createTask(Object... params) {
                 Log.e("O_O", "queryFriendDetailTaskCreator " + Thread.currentThread().getName());
                 List<Friend> list = (List<Friend>) params[0];
 

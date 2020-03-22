@@ -27,6 +27,69 @@ public class GraphVisitor {
      * ***************************************************************************************************************
      */
 
+    public static <E extends IVertex> void dfsForward(E start, OnVisitListener<E> onVisitListener) {
+        AdjacentGetter<E> forwardAdjacentGetter = new AdjacentGetter<E>() {
+            @NonNull
+            @Override
+            public List<E> getAdjacent(E vertex) {
+                return vertex.getNextList();
+            }
+        };
+
+        dfs(start, onVisitListener, forwardAdjacentGetter, new HashSet<E>(), 0);
+    }
+
+    public static <E extends IVertex> void dfsBackward(E end, OnVisitListener<E> onVisitListener) {
+        AdjacentGetter<E> backwardAdjacentGetter = new AdjacentGetter<E>() {
+            @NonNull
+            @Override
+            public List<E> getAdjacent(E vertex) {
+                return vertex.getPreList();
+            }
+        };
+
+        dfs(end, onVisitListener, backwardAdjacentGetter, new HashSet<E>(), 0);
+    }
+
+    private static <E extends IVertex> void dfs(E vertex, OnVisitListener<E> onVisitListener, AdjacentGetter<E> adjacentGetter, Set<E> visited, int deep) {
+        if (deep == 0) {
+            if (onVisitListener != null) {
+                onVisitListener.onStart();
+            }
+        }
+
+        if (vertex == null) {
+            return;
+        }
+
+        visited.add(vertex);
+        if (onVisitListener != null) {
+            onVisitListener.onVisit(vertex);
+        }
+
+        List<E> adjList = adjacentGetter.getAdjacent(vertex);
+        for (E adj : adjList) {
+            if (onVisitListener != null) {
+                if (onVisitListener.stop()) {
+                    return;
+                }
+            }
+            dfs(adj, onVisitListener, adjacentGetter, visited, deep + 1);
+        }
+
+        if (deep == 0) {
+            if (onVisitListener != null) {
+                onVisitListener.onComplete();
+            }
+        }
+    }
+
+    /**
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
+
     public static <E extends IVertex> void bfsForward(E start, OnVisitListener<E> onVisitListener) {
         AdjacentGetter<E> forwardAdjacentGetter = new AdjacentGetter<E>() {
             @NonNull
@@ -51,12 +114,6 @@ public class GraphVisitor {
         bfs(end, onVisitListener, backwardAdjacentGetter);
     }
 
-    /**
-     * ***************************************************************************************************************
-     * //
-     * ***************************************************************************************************************
-     */
-
     private static <E extends IVertex> void bfs(E startNode, OnVisitListener<E> onVisitListener, AdjacentGetter<E> adjacentGetter) {
         Queue<E> queue = new LinkedList<>();
         queue.add(startNode);
@@ -72,7 +129,13 @@ public class GraphVisitor {
             viewedSet.add(v);
 
             if (onVisitListener != null) {
-                onVisitListener.visit(v);
+                onVisitListener.onVisit(v);
+            }
+
+            if (onVisitListener != null) {
+                if (onVisitListener.stop()) {
+                    break;
+                }
             }
 
             for (E next : adjacentGetter.getAdjacent(v)) {

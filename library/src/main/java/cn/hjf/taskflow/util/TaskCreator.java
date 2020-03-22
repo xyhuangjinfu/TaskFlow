@@ -60,7 +60,7 @@ class TaskCreator {
             }
 
             @Override
-            public void visit(IFunc f) {
+            public void onVisit(IFunc f) {
                 if (f instanceof CompoundFunc) {
                     Func[] newTerminal = expand((CompoundFunc) f);
                     //如果 start 或者 end 是 复合结构，需要重新指向
@@ -76,6 +76,11 @@ class TaskCreator {
             @Override
             public void onComplete() {
 
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
             }
         });
 
@@ -146,7 +151,7 @@ class TaskCreator {
             }
 
             @Override
-            public void visit(IFunc f) {
+            public void onVisit(IFunc f) {
                 if (!(f instanceof Func)) {
                     throw new RuntimeException("func type error " + f.getClass().getName());
                 }
@@ -166,6 +171,11 @@ class TaskCreator {
             @Override
             public void onComplete() {
 
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
             }
         });
 

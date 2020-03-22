@@ -58,7 +58,7 @@ public class Engine {
             }
 
             @Override
-            public void visit(Task t) {
+            public void onVisit(Task t) {
                 if (t.getNextList().isEmpty()) {
                     if (end == null) {
                         end = t;
@@ -71,6 +71,11 @@ public class Engine {
             @Override
             public void onComplete() {
 
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
             }
         });
     }

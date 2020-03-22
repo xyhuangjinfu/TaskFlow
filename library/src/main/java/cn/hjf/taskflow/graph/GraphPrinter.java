@@ -17,7 +17,7 @@ public final class GraphPrinter {
             }
 
             @Override
-            public void visit(E t) {
+            public void onVisit(E t) {
                 List<E> list = t.getNextList();
                 for (E nextTask : list) {
                     Log.e(TAG, t + " -> " + nextTask);
@@ -27,6 +27,11 @@ public final class GraphPrinter {
             @Override
             public void onComplete() {
 
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
             }
         });
     }
@@ -40,7 +45,7 @@ public final class GraphPrinter {
             }
 
             @Override
-            public void visit(E t) {
+            public void onVisit(E t) {
                 List<E> list = t.getNextList();
                 for (E nextTask : list) {
                     Log.e(TAG, t + " -> " + nextTask);
@@ -50,6 +55,11 @@ public final class GraphPrinter {
             @Override
             public void onComplete() {
 
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
             }
         });
     }
