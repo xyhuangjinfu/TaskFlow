@@ -102,7 +102,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R> void joinTo(IFunc<R1> f1, IFunc1<R1, R> joinTo) {
+    public <R> void joinTo(IFunc1<R, ?> joinTo, IFunc<R> f1) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -113,7 +113,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc2<R1, R2, R> joinTo) {
+    public <R1, R2> void joinTo(IFunc2<R1, R2, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -126,7 +126,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc3<R1, R2, R3, R> joinTo) {
+    public <R1, R2, R3> void joinTo(IFunc3<R1, R2, R3, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -141,7 +141,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc4<R1, R2, R3, R4, R> joinTo) {
+    public <R1, R2, R3, R4> void joinTo(IFunc4<R1, R2, R3, R4, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -158,7 +158,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc5<R1, R2, R3, R4, R5, R> joinTo) {
+    public <R1, R2, R3, R4, R5> void joinTo(IFunc5<R1, R2, R3, R4, R5, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -177,7 +177,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc6<R1, R2, R3, R4, R5, R6, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6> void joinTo(IFunc6<R1, R2, R3, R4, R5, R6, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -198,7 +198,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc7<R1, R2, R3, R4, R5, R6, R7, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7> void joinTo(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -221,7 +221,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8> void joinTo(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -246,7 +246,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> void joinTo(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -273,7 +273,7 @@ class RealFuncGraphBuilder {
         mFuncSet.add(joinTo);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> void joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10, IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> joinTo) {
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> void joinTo(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10) {
         checkNotJoined(joinTo);
 
         mJoinedFuncSet.add(joinTo);
@@ -299,6 +299,19 @@ class RealFuncGraphBuilder {
         mFuncSet.add(f8);
         mFuncSet.add(f9);
         mFuncSet.add(f10);
+        mFuncSet.add(joinTo);
+    }
+
+    public void joinTo(IFuncN joinTo, IFunc... funcs) {
+        checkNotJoined(joinTo);
+
+        mJoinedFuncSet.add(joinTo);
+
+        for (IFunc f : funcs) {
+            joinTo.after(f);
+            mFuncSet.add(f);
+        }
+
         mFuncSet.add(joinTo);
     }
 
