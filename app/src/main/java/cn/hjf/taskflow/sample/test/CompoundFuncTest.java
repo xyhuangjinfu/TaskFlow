@@ -5,10 +5,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import cn.hjf.taskflow.execute.Callback;
+import cn.hjf.taskflow.util.CompoundFuncBuilder;
+import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func3;
 import cn.hjf.taskflow.util.FuncExecutor;
-import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.IFunc1;
 
 public class CompoundFuncTest {
@@ -124,13 +125,19 @@ public class CompoundFuncTest {
             }
         };
 
-        IFunc1<String, ViewData> f = (IFunc1<String, ViewData>) new CompoundFuncBuilder()
-                .joinTo(mergeData, getVocab, getExample, getFavorite)
-                .joinTo(getExample, getVocab)
-                .joinTo(getFavorite, getVocab)
+//        IFunc1<String, ViewData> f = (IFunc1<String, ViewData>) new CompoundFuncBuilder()
+//                .joinTo(mergeData, getVocab, getExample, getFavorite)
+//                .joinTo(getExample, getVocab)
+//                .joinTo(getFavorite, getVocab)
+//                .create();
+
+        IFunc1<String, ViewData> cf = new CompoundFuncBuilder1<String, ViewData>(getVocab)
+                .addEnd(mergeData, getVocab, getExample, getFavorite)
+                .addNormal(getExample, getVocab)
+                .addNormal(getFavorite, getVocab)
                 .create();
 
-        FuncExecutor.execute(f, new Callback<ViewData>() {
+        FuncExecutor.execute(cf, new Callback<ViewData>() {
             @Override
             public void onComplete(ViewData o) {
                 Log.e("O_O", "onComplete " + vocabId + " , " + o);
