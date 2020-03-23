@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 abstract class CompoundFunc<R> extends AbsFunc<R> {
 
     @NonNull
-    private IFunc mStart;
+    private final IFunc mStart;
     @NonNull
-    private IFunc mEnd;
+    private final IFunc mEnd;
 
     public CompoundFunc(@NonNull IFunc start, @NonNull IFunc end) {
         mStart = start;

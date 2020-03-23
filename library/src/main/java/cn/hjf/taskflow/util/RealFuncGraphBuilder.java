@@ -62,7 +62,7 @@ class RealFuncGraphBuilder {
         return new IFunc[]{start, end};
     }
 
-    private void checkConnected(IFunc start, final IFunc end) {
+    private void checkConnected(final IFunc start, final IFunc end) {
         GraphVisitor.dfsForward(start, new OnVisitListener<IFunc>() {
             private boolean connected = false;
 
@@ -81,7 +81,7 @@ class RealFuncGraphBuilder {
             @Override
             public void onComplete() {
                 if (!connected) {
-                    throw new RuntimeException("start func not yet connected to end func");
+                    throw new RuntimeException("start func " + start + " not yet connected to end func " + end);
                 }
             }
 

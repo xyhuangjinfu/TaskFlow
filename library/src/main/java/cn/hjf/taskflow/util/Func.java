@@ -4,20 +4,19 @@ import java.util.concurrent.atomic.AtomicLong;
 
 abstract class Func<R> extends AbsFunc<R> {
 
-    static AtomicLong sAtomicLong = new AtomicLong(0);
+    private static final AtomicLong sAtomicLong = new AtomicLong(0);
 
+    private final long mId;
+    private final String mName;
     private boolean mAttached;
-    private long mId;
-    private String mName;
 
     public Func() {
-        mId = sAtomicLong.getAndIncrement();
-        mName = "Func-" + mId;
+        this(null);
     }
 
     public Func(String name) {
         mId = sAtomicLong.getAndIncrement();
-        mName = name;
+        mName = name == null ? "Func-" + mId : name;
     }
 
     boolean isAttached() {
@@ -28,8 +27,12 @@ abstract class Func<R> extends AbsFunc<R> {
         mAttached = attached;
     }
 
-    String getName() {
+    public String getName() {
         return mName;
+    }
+
+    public long getId() {
+        return mId;
     }
 
     @Override
