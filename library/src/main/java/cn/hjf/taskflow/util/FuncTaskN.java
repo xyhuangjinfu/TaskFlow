@@ -1,19 +1,13 @@
 package cn.hjf.taskflow.util;
 
-import cn.hjf.taskflow.core.Task;
-
-class FuncTaskN extends Task {
-
-    private final FuncN mFunc;
+class FuncTaskN extends FuncTask {
 
     public FuncTaskN(FuncN func) {
-        super(func.getName());
-        mFunc = func;
-        func.setAttached(true);
+        super(func);
     }
 
     @Override
     public Object process(Object... params) throws Exception {
-        return mFunc.process(params);
+        return ((FuncN) mFunc).process(params);
     }
 }
