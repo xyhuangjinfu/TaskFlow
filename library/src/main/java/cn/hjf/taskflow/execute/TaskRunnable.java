@@ -161,6 +161,9 @@ class TaskRunnable implements Runnable {
      * @return
      */
     private boolean isEndTask() {
+        if (mTask instanceof TaskCreator) {
+            return false;
+        }
         return mTask.getNextList().isEmpty();
     }
 }
