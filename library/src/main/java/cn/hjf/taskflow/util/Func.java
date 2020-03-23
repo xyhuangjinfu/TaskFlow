@@ -6,9 +6,9 @@ abstract class Func<R> extends AbsFunc<R> {
 
     private static final AtomicLong sAtomicLong = new AtomicLong(0);
 
-    private final long mId;
-    private final String mName;
-    private boolean mAttached;
+    protected final long mId;
+    protected final String mName;
+    protected boolean mAttached;
 
     public Func() {
         this(null);

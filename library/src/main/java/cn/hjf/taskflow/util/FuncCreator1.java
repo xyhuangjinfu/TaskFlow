@@ -2,7 +2,7 @@ package cn.hjf.taskflow.util;
 
 import androidx.annotation.NonNull;
 
-public abstract class FuncCreator1<P1, R> extends Func<R> implements IFunc1<P1, R> {
+public abstract class FuncCreator1<P, R> extends FuncCreator<R> implements IFunc1<P, R> {
 
     public FuncCreator1() {
     }
@@ -12,10 +12,5 @@ public abstract class FuncCreator1<P1, R> extends Func<R> implements IFunc1<P1, 
     }
 
     @NonNull
-    protected R process(P1 p) throws Exception {
-        IFunc[] startAndEnd = createFunc(p);
-        return null;
-    }
-
-    protected abstract IFunc[] createFunc(P1 p);
+    protected abstract IFunc createFunc(P p);
 }

@@ -23,6 +23,14 @@ public abstract class TaskCreator extends Task {
         return createTask(params);
     }
 
+    @Override
+    public String toString() {
+        return "TaskCreator{" +
+                "mId=" + mId +
+                ", mName='" + mName + '\'' +
+                '}';
+    }
+
     /**
      * Create task or task graph dynamically.
      *

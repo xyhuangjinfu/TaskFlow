@@ -27,8 +27,8 @@ public abstract class Task extends AbsVertex<Task> {
 
     private static final AtomicLong sIdGenerator = new AtomicLong(0);
 
-    private final String mName;
-    private final long mId;
+    protected final String mName;
+    protected final long mId;
 
     public Task() {
         this(null);
