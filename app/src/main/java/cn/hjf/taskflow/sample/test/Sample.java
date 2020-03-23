@@ -26,7 +26,7 @@ import cn.hjf.taskflow.util.IFuncN;
 import cn.hjf.taskflow.util.TaskFlow;
 
 public class Sample {
-    class Vocab {
+    private class Vocab {
         String s = "";
 
         public Vocab(String s) {
@@ -34,7 +34,7 @@ public class Sample {
         }
     }
 
-    class ExampleV1 {
+    private class ExampleV1 {
         String s = "";
 
         public ExampleV1(String s) {
@@ -42,7 +42,7 @@ public class Sample {
         }
     }
 
-    class ExampleV2 {
+    private class ExampleV2 {
         String s = "";
 
         public ExampleV2(String s) {
@@ -50,7 +50,7 @@ public class Sample {
         }
     }
 
-    class Favorite {
+    private class Favorite {
         String s = "";
 
         public Favorite(String s) {
@@ -58,7 +58,7 @@ public class Sample {
         }
     }
 
-    class SearchData {
+    private class SearchData {
         String s = "";
 
         public SearchData(String s) {
@@ -148,7 +148,7 @@ public class Sample {
         });
     }
 
-    class User {
+    private class User {
         String name;
 
         public User(String name) {
@@ -156,7 +156,7 @@ public class Sample {
         }
     }
 
-    class Friend {
+    private class Friend {
         String name;
 
         public Friend(String name) {
@@ -164,7 +164,7 @@ public class Sample {
         }
     }
 
-    class FriendDetail {
+    private class FriendDetail {
         Friend mFriend;
         String comment;
 
@@ -174,7 +174,7 @@ public class Sample {
         }
     }
 
-    class MergeData {
+    private class MergeData {
         User mUser;
         List<FriendDetail> mFriendDetails;
 

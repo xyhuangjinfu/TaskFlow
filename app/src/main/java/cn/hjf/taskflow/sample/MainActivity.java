@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cn.hjf.taskflow.sample.test.CompoundFuncTest;
+import cn.hjf.taskflow.sample.test.FuncCreatorTest;
 import cn.hjf.taskflow.sample.test.FuncGraphTest;
 import cn.hjf.taskflow.sample.test.FuncLinkTest;
 import cn.hjf.taskflow.sample.test.SingleFuncTest;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        new FuncGraphTest().testData("abcd");
 
-        new CompoundFuncTest().testData("abcdef");
+//        new CompoundFuncTest().testData("abcdef");
+
+        new FuncCreatorTest().test("hjf");
     }
 }
