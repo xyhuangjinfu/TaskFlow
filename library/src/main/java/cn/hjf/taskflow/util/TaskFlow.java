@@ -94,7 +94,7 @@ public final class TaskFlow<R> {
      */
 
     public IFunc<R> create() {
-        CompoundFuncBuilder funcGraphBuilder = new CompoundFuncBuilder(mRealBuilder);
+        DeprecatedCompoundFuncBuilder funcGraphBuilder = new DeprecatedCompoundFuncBuilder(mRealBuilder);
         IFunc func = funcGraphBuilder.create();
         return func;
     }

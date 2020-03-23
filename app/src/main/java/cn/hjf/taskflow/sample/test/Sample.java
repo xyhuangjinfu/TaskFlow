@@ -17,7 +17,6 @@ import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func2;
 import cn.hjf.taskflow.util.Func3;
 import cn.hjf.taskflow.util.FuncCreator1;
-import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.FuncN;
 import cn.hjf.taskflow.util.IFunc;
 import cn.hjf.taskflow.util.IFunc0;

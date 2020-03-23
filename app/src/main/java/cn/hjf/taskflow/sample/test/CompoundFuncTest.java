@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import cn.hjf.taskflow.execute.Callback;
-import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func3;

@@ -1,6 +1,6 @@
 package cn.hjf.taskflow.util;
 
-public class CompoundFuncBuilder0<Return> extends AbsCompoundFuncBuilder {
+public class CompoundFuncBuilder0<Return> extends CompoundFuncBuilder {
 
     public CompoundFuncBuilder0(IFunc0 start) {
         super(start);
