@@ -10,7 +10,7 @@ import cn.hjf.taskflow.util.FuncExecutor;
 
 public class SingleFuncTest {
 
-    public void toInt(String value) {
+    public void toInt(final String value) {
         Func1<String, Integer> f = new Func1<String, Integer>() {
             @NonNull
             @Override
@@ -22,17 +22,17 @@ public class SingleFuncTest {
         FuncExecutor.execute(f, new Callback<Integer>() {
             @Override
             public void onComplete(Integer o) {
-                Log.e("O_O", "onComplete " + o);
+                Log.e("O_O", "onComplete " + value + " , " + o);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("O_O", "onError " + e.getMessage());
+                Log.e("O_O", "onError " + value + " , " + e.getMessage());
             }
         }, value);
     }
 
-    public void toIntDealWithException(String value) {
+    public void toIntDealWithException(final String value) {
         Func1<String, Integer> f = new Func1<String, Integer>() {
             @NonNull
             @Override
@@ -48,12 +48,12 @@ public class SingleFuncTest {
         FuncExecutor.execute(f, new Callback<Integer>() {
             @Override
             public void onComplete(Integer o) {
-                Log.e("O_O", "onComplete " + o);
+                Log.e("O_O", "onComplete " + value + " , " + o);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("O_O", "onError " + e.getMessage());
+                Log.e("O_O", "onError " + value + " , " + e.getMessage());
             }
         }, value);
     }

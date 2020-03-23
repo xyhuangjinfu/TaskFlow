@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import cn.hjf.taskflow.sample.test.FuncLinkTest;
 import cn.hjf.taskflow.sample.test.SingleFuncTest;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,5 +23,9 @@ public class MainActivity extends AppCompatActivity {
         new SingleFuncTest().toInt("123");
         new SingleFuncTest().toInt("123ss");
         new SingleFuncTest().toIntDealWithException("123ss");
+
+        new FuncLinkTest().testPass("40");
+        new FuncLinkTest().testPass("80");
+        new FuncLinkTest().testPass("80a");
     }
 }
