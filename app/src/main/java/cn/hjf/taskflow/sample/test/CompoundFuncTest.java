@@ -8,7 +8,7 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func3;
 import cn.hjf.taskflow.util.FuncExecutor;
-import cn.hjf.taskflow.util.FuncGraphBuilder;
+import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.IFunc1;
 
 public class CompoundFuncTest {
@@ -124,7 +124,7 @@ public class CompoundFuncTest {
             }
         };
 
-        IFunc1<String, ViewData> f = (IFunc1<String, ViewData>) new FuncGraphBuilder()
+        IFunc1<String, ViewData> f = (IFunc1<String, ViewData>) new CompoundFuncBuilder()
                 .joinTo(mergeData, getVocab, getExample, getFavorite)
                 .joinTo(getExample, getVocab)
                 .joinTo(getFavorite, getVocab)
@@ -159,7 +159,7 @@ public class CompoundFuncTest {
             }
         };
 
-        IFunc1<Vocab, ExampleV2> f = (IFunc1<Vocab, ExampleV2>) new FuncGraphBuilder()
+        IFunc1<Vocab, ExampleV2> f = (IFunc1<Vocab, ExampleV2>) new CompoundFuncBuilder()
                 .joinTo(transExample, getExample)
                 .create();
 

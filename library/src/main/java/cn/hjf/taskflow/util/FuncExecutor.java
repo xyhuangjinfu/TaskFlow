@@ -80,7 +80,7 @@ public final class FuncExecutor {
     }
 
     private static Session doExecute(IFunc f, Callback callback, Object... params) {
-        Task task = TaskTransfer.create(f);
+        Task task = TaskGraphTransfer.create(f);
         return Engine.execute(task, callback, params);
     }
 }

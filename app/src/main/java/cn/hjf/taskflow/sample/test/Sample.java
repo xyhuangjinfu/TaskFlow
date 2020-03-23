@@ -16,7 +16,7 @@ import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func2;
 import cn.hjf.taskflow.util.Func3;
 import cn.hjf.taskflow.util.FuncCreator1;
-import cn.hjf.taskflow.util.FuncGraphBuilder;
+import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.FuncN;
 import cn.hjf.taskflow.util.IFunc;
 import cn.hjf.taskflow.util.IFunc0;
@@ -103,7 +103,7 @@ public class Sample {
             }
         };
 
-        IFunc1<Vocab, ExampleV2> fetchAndTransExample = (IFunc1<Vocab, ExampleV2>) new FuncGraphBuilder()
+        IFunc1<Vocab, ExampleV2> fetchAndTransExample = (IFunc1<Vocab, ExampleV2>) new CompoundFuncBuilder()
                 .joinTo(transExample, fetchExample)
                 .create();
 

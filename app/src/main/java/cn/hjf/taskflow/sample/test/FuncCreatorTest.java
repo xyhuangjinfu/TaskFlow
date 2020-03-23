@@ -12,7 +12,7 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.FuncCreator1;
 import cn.hjf.taskflow.util.FuncExecutor;
-import cn.hjf.taskflow.util.FuncGraphBuilder;
+import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.FuncN;
 import cn.hjf.taskflow.util.IFunc;
 import cn.hjf.taskflow.util.IFunc1;
@@ -80,7 +80,7 @@ public class FuncCreatorTest {
             }
         };
 
-        IFunc1<String, List<Friend>> getAllFriend = (IFunc1<String, List<Friend>>) new FuncGraphBuilder()
+        IFunc1<String, List<Friend>> getAllFriend = (IFunc1<String, List<Friend>>) new CompoundFuncBuilder()
                 .joinTo(creator1, getFriendIdList)
                 .create();
 

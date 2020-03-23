@@ -13,7 +13,7 @@ public final class TaskFlow<R> {
      * ***************************************************************************************************************
      */
 
-    private RealFuncGraphBuilder mRealBuilder = new RealFuncGraphBuilder();
+    private GraphBuilder mRealBuilder = new GraphBuilder();
 
     /**
      * ***************************************************************************************************************
@@ -94,7 +94,7 @@ public final class TaskFlow<R> {
      */
 
     public IFunc<R> create() {
-        FuncGraphBuilder funcGraphBuilder = new FuncGraphBuilder(mRealBuilder);
+        CompoundFuncBuilder funcGraphBuilder = new CompoundFuncBuilder(mRealBuilder);
         IFunc func = funcGraphBuilder.create();
         return func;
     }
@@ -180,7 +180,7 @@ public final class TaskFlow<R> {
     }
 
     private static Task getTask(IFunc func) {
-        Task startTask = new TaskTransfer().create(func);
+        Task startTask = new TaskGraphTransfer().create(func);
         return startTask;
     }
 

@@ -6,7 +6,7 @@ import java.util.Set;
 import cn.hjf.taskflow.graph.GraphVisitor;
 import cn.hjf.taskflow.graph.OnVisitListener;
 
-class RealFuncGraphBuilder {
+class GraphBuilder {
 
     private IFunc mStart;
     private IFunc mEnd;

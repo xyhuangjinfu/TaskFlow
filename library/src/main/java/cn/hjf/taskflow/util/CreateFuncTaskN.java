@@ -14,7 +14,7 @@ class CreateFuncTaskN extends CreateFuncTask {
     @Override
     public Task createTask(Object... params) {
         IFunc start = ((FuncCreatorN) mFuncCreator).createFunc(params);
-        Task task = TaskTransfer.create(start);
+        Task task = TaskGraphTransfer.create(start);
         return task;
     }
 }

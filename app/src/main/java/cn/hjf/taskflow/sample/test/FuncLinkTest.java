@@ -7,9 +7,7 @@ import androidx.annotation.NonNull;
 import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.FuncExecutor;
-import cn.hjf.taskflow.util.FuncGraphBuilder;
-import cn.hjf.taskflow.util.IFunc;
-import cn.hjf.taskflow.util.IFunc0;
+import cn.hjf.taskflow.util.CompoundFuncBuilder;
 import cn.hjf.taskflow.util.IFunc1;
 
 public class FuncLinkTest {
@@ -37,7 +35,7 @@ public class FuncLinkTest {
             }
         };
 
-        IFunc1<String, String> f = (IFunc1<String, String>) new FuncGraphBuilder()
+        IFunc1<String, String> f = (IFunc1<String, String>) new CompoundFuncBuilder()
                 .joinTo(toResult, compare)
                 .joinTo(compare, toInt)
                 .create();

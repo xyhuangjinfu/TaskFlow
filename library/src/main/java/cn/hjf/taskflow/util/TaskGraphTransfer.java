@@ -13,7 +13,7 @@ import cn.hjf.taskflow.graph.OnVisitListener;
 /**
  * Utils to create task graph from func graph
  */
-class TaskTransfer {
+class TaskGraphTransfer {
 
     /**
      * create task graph from func graph.
