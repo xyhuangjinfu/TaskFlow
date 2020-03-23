@@ -94,7 +94,9 @@ public class GraphVisitor {
                     return;
                 }
             }
-            dfs(adj, onVisitListener, adjacentGetter, visited, deep + 1);
+            if (!visited.contains(adj)) {
+                dfs(adj, onVisitListener, adjacentGetter, visited, deep + 1);
+            }
         }
 
         if (deep == 0) {
@@ -138,7 +140,7 @@ public class GraphVisitor {
         Queue<E> queue = new LinkedList<>();
         queue.add(startNode);
 
-        Set<E> viewedSet = new HashSet<>();
+        Set<E> viewedOrQueuedSet = new HashSet<>();
 
         if (onVisitListener != null) {
             onVisitListener.onStart();
@@ -146,7 +148,7 @@ public class GraphVisitor {
 
         while (!queue.isEmpty()) {
             E v = queue.poll();
-            viewedSet.add(v);
+            viewedOrQueuedSet.add(v);
 
             if (onVisitListener != null) {
                 onVisitListener.onVisit(v);
@@ -159,8 +161,9 @@ public class GraphVisitor {
             }
 
             for (E next : adjacentGetter.getAdjacent(v)) {
-                if (!queue.contains(next) && !viewedSet.contains(next)) {
+                if (!viewedOrQueuedSet.contains(next)) {
                     queue.add(next);
+                    viewedOrQueuedSet.add(next);
                 }
             }
         }
