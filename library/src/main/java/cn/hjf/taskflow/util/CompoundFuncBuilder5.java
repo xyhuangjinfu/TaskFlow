@@ -13,6 +13,9 @@ public class CompoundFuncBuilder5<Param1, Param2, Param3, Param4, Param5, Return
      */
 
     public CompoundFunc5<Param1, Param2, Param3, Param4, Param5, Return> create() {
+        if (!mHaveEnd) {
+            throw new RuntimeException("must call addEnd() once before call cerate()");
+        }
         IFunc[] startAndEnd = mGraphBuilder.getStartAndEnd();
         IFunc5<Param1, Param2, Param3, Param4, Param5, ?> start = (IFunc5<Param1, Param2, Param3, Param4, Param5, ?>) startAndEnd[0];
         IFunc<Return> end = (IFunc<Return>) startAndEnd[1];

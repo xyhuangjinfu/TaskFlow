@@ -13,6 +13,9 @@ public class CompoundFuncBuilder0<Return> extends AbsCompoundFuncBuilder {
      */
 
     public CompoundFunc0<Return> create() {
+        if (!mHaveEnd) {
+            throw new RuntimeException("must call addEnd() once before call cerate()");
+        }
         IFunc[] startAndEnd = mGraphBuilder.getStartAndEnd();
         IFunc0 start = (IFunc0) startAndEnd[0];
         IFunc<Return> end = (IFunc<Return>) startAndEnd[1];

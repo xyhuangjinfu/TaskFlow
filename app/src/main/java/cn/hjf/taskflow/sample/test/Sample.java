@@ -11,6 +11,7 @@ import cn.hjf.taskflow.core.Task;
 import cn.hjf.taskflow.core.TaskCreator;
 import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.execute.Engine;
+import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func0;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func2;
@@ -103,8 +104,8 @@ public class Sample {
             }
         };
 
-        IFunc1<Vocab, ExampleV2> fetchAndTransExample = (IFunc1<Vocab, ExampleV2>) new CompoundFuncBuilder()
-                .joinTo(transExample, fetchExample)
+        IFunc1<Vocab, ExampleV2> fetchAndTransExample = (IFunc1<Vocab, ExampleV2>) new CompoundFuncBuilder1<Vocab, ExampleV2>(fetchExample)
+                .addEnd(transExample, fetchExample)
                 .create();
 
         Func1<String, String> ff = new Func1<String, String>() {

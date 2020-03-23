@@ -13,6 +13,9 @@ public class CompoundFuncBuilder3<Param1, Param2, Param3, Return> extends AbsCom
      */
 
     public CompoundFunc3<Param1, Param2, Param3, Return> create() {
+        if (!mHaveEnd) {
+            throw new RuntimeException("must call addEnd() once before call cerate()");
+        }
         IFunc[] startAndEnd = mGraphBuilder.getStartAndEnd();
         IFunc3<Param1, Param2, Param3, ?> start = (IFunc3<Param1, Param2, Param3, ?>) startAndEnd[0];
         IFunc<Return> end = (IFunc<Return>) startAndEnd[1];
