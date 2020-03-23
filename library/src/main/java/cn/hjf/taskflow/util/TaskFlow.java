@@ -32,53 +32,58 @@ public final class TaskFlow<R> {
      * ***************************************************************************************************************
      */
 
-    public <R1> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc1<R1, ?> joinTo) {
-        mRealBuilder.joinTo(f1, joinTo);
+    public <R1> TaskFlow<R> joinTo(IFunc1<R1, ?> joinTo, IFunc<R1> f1) {
+        mRealBuilder.joinTo(joinTo, f1);
         return this;
     }
 
-    public <R1, R2> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc2<R1, R2, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, joinTo);
+    public <R1, R2> TaskFlow<R> joinTo(IFunc2<R1, R2, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2) {
+        mRealBuilder.joinTo(joinTo, f1, f2);
         return this;
     }
 
-    public <R1, R2, R3> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc3<R1, R2, R3, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, joinTo);
+    public <R1, R2, R3> TaskFlow<R> joinTo(IFunc3<R1, R2, R3, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3);
         return this;
     }
 
-    public <R1, R2, R3, R4> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc4<R1, R2, R3, R4, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, joinTo);
+    public <R1, R2, R3, R4> TaskFlow<R> joinTo(IFunc4<R1, R2, R3, R4, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc5<R1, R2, R3, R4, R5, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, joinTo);
+    public <R1, R2, R3, R4, R5> TaskFlow<R> joinTo(IFunc5<R1, R2, R3, R4, R5, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc6<R1, R2, R3, R4, R5, R6, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, joinTo);
+    public <R1, R2, R3, R4, R5, R6> TaskFlow<R> joinTo(IFunc6<R1, R2, R3, R4, R5, R6, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7> TaskFlow<R> joinTo(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8> TaskFlow<R> joinTo(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, f9, joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> TaskFlow<R> joinTo(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9);
         return this;
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> TaskFlow<R> joinTo(IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10, IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> joinTo) {
-        mRealBuilder.joinTo(f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> TaskFlow<R> joinTo(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10) {
+        mRealBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10);
+        return this;
+    }
+
+    public TaskFlow<R> joinTo(IFuncN joinTo, IFunc... funcs) {
+        mRealBuilder.joinTo(joinTo, funcs);
         return this;
     }
 
@@ -186,91 +191,91 @@ public final class TaskFlow<R> {
      */
 
     public <R1> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, ?> f2) {
-        mRealBuilder.joinTo(f1, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, ?> f3) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, ?> f4) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, ?> f5) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4, R5> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, R5> f5, IFunc1<R5, ?> f6) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
-        mRealBuilder.joinTo(f5, f6);
+        mRealBuilder.joinTo(f6, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, R5> f5, IFunc1<R5, R6> f6, IFunc1<R6, ?> f7) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
-        mRealBuilder.joinTo(f5, f6);
-        mRealBuilder.joinTo(f6, f7);
+        mRealBuilder.joinTo(f7, f6);
+        mRealBuilder.joinTo(f6, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, R5> f5, IFunc1<R5, R6> f6, IFunc1<R6, R7> f7, IFunc1<R7, ?> f8) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
-        mRealBuilder.joinTo(f5, f6);
-        mRealBuilder.joinTo(f6, f7);
-        mRealBuilder.joinTo(f7, f8);
+        mRealBuilder.joinTo(f8, f7);
+        mRealBuilder.joinTo(f7, f6);
+        mRealBuilder.joinTo(f6, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R8> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, R5> f5, IFunc1<R5, R6> f6, IFunc1<R6, R7> f7, IFunc1<R7, R8> f8, IFunc1<R8, ?> f9) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
-        mRealBuilder.joinTo(f5, f6);
-        mRealBuilder.joinTo(f6, f7);
-        mRealBuilder.joinTo(f7, f8);
-        mRealBuilder.joinTo(f8, f9);
+        mRealBuilder.joinTo(f9, f8);
+        mRealBuilder.joinTo(f8, f7);
+        mRealBuilder.joinTo(f7, f6);
+        mRealBuilder.joinTo(f6, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R8, R9> TaskFlow link(IFunc1<?, R1> f1, IFunc1<R1, R2> f2, IFunc1<R2, R3> f3, IFunc1<R3, R4> f4, IFunc1<R4, R5> f5, IFunc1<R5, R6> f6, IFunc1<R6, R7> f7, IFunc1<R7, R8> f8, IFunc1<R8, R9> f9, IFunc1<R9, ?> f10) {
-        mRealBuilder.joinTo(f1, f2);
-        mRealBuilder.joinTo(f2, f3);
-        mRealBuilder.joinTo(f3, f4);
-        mRealBuilder.joinTo(f4, f5);
-        mRealBuilder.joinTo(f5, f6);
-        mRealBuilder.joinTo(f6, f7);
-        mRealBuilder.joinTo(f7, f8);
-        mRealBuilder.joinTo(f8, f9);
-        mRealBuilder.joinTo(f9, f10);
+        mRealBuilder.joinTo(f10, f9);
+        mRealBuilder.joinTo(f9, f8);
+        mRealBuilder.joinTo(f8, f7);
+        mRealBuilder.joinTo(f7, f6);
+        mRealBuilder.joinTo(f6, f5);
+        mRealBuilder.joinTo(f5, f4);
+        mRealBuilder.joinTo(f4, f3);
+        mRealBuilder.joinTo(f3, f2);
+        mRealBuilder.joinTo(f2, f1);
 
         return this;
     }
