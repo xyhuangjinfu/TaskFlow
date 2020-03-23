@@ -108,7 +108,7 @@ class FuncTaskCreator {
 
 
     private static Task createFuncCreator1(FuncCreator1 func) {
-        return new FuncCreatorTask1(func);
+        return new CreateFuncTask1(func);
     }
 
     private static Task createFuncCreator3(FuncCreator3 func) {
