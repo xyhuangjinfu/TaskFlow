@@ -1,7 +1,7 @@
 package cn.hjf.taskflow.execute;
 
 /**
- * Task执行的结果回调对象
+ * The callback of the result of the task execute.
  *
  * @param <T>
  */

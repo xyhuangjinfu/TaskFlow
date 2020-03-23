@@ -2,23 +2,37 @@ package cn.hjf.taskflow.execute;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cn.hjf.taskflow.core.Task;
-import cn.hjf.taskflow.graph.GraphPrinter;
 import cn.hjf.taskflow.graph.GraphVisitor;
 import cn.hjf.taskflow.graph.OnVisitListener;
 
+/**
+ * Engine to run the task graph.
+ */
 public class Engine {
 
     private static ExecutorService sExecutorService = Executors.newCachedThreadPool();
 
     /**
-     * 执行任务图
+     * Specify the ExecutorService you want to execute your tasks.
+     *
+     * @param executorService
+     */
+    public static void setExecutorService(ExecutorService executorService) {
+        sExecutorService = executorService;
+    }
+
+    /**
+     * Execute the task.
      *
      * @param task
      * @param callback
+     * @param params   Parameters for start task.
      * @return
      */
     public static Session execute(@NonNull Task task, @NonNull Callback callback, Object... params) {
@@ -26,6 +40,7 @@ public class Engine {
 
         Session session = new Session(callback);
         TaskRunnable taskRunnable = new TaskRunnable(session, task);
+        taskRunnable.setParams(params);
         sExecutorService.submit(taskRunnable);
         return session;
     }
@@ -45,13 +60,34 @@ public class Engine {
      * ***************************************************************************************************************
      */
 
-    private static void checkTaskGraph(@NonNull final Task task) {
-        GraphPrinter.printForward(task);
-        GraphPrinter.printBackward(GraphVisitor.findEnd(task));
+    /**
+     * Check the validation of the task.
+     *
+     * @param start
+     */
+    private static void checkTaskGraph(@NonNull final Task start) {
+        List<Task> endList = getAllEndTask(start);
+        if (endList.size() != 1) {
+            throw new RuntimeException("start task " + start + " have wrong number of end tasks. " + endList);
+        }
 
-        GraphVisitor.bfsForward(task, new OnVisitListener<Task>() {
-            private Task end = null;
+        Task end = endList.get(0);
+        List<Task> startList = getAllStartTask(end);
+        if (startList.size() != 1) {
+            throw new RuntimeException("end task " + end + " have wrong number of start tasks. " + startList);
+        }
+    }
 
+    /**
+     * Return all end task
+     *
+     * @param start
+     * @return
+     */
+    private static List<Task> getAllEndTask(@NonNull final Task start) {
+        final List<Task> endList = new ArrayList<>();
+
+        GraphVisitor.bfsForward(start, new OnVisitListener<Task>() {
             @Override
             public void onStart() {
 
@@ -60,11 +96,7 @@ public class Engine {
             @Override
             public void onVisit(Task t) {
                 if (t.getNextList().isEmpty()) {
-                    if (end == null) {
-                        end = t;
-                    } else {
-                        throw new IllegalArgumentException("task : " + task + " have more than one end task");
-                    }
+                    endList.add(t);
                 }
             }
 
@@ -78,5 +110,43 @@ public class Engine {
                 return false;
             }
         });
+
+        return endList;
+    }
+
+    /**
+     * Return all start task
+     *
+     * @param end
+     * @return
+     */
+    private static List<Task> getAllStartTask(@NonNull final Task end) {
+        final List<Task> startList = new ArrayList<>();
+
+        GraphVisitor.bfsBackward(end, new OnVisitListener<Task>() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onVisit(Task t) {
+                if (t.getPreList().isEmpty()) {
+                    startList.add(t);
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public boolean stop() {
+                return false;
+            }
+        });
+
+        return startList;
     }
 }

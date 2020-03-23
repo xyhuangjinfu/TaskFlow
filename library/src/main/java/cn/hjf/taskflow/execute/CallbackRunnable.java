@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * 执行结果回调的任务，应该只被放进队列一次
+ * Runnable to execute the result callback, should be put into the execute queue only once.
  */
 class CallbackRunnable implements Runnable {
 
