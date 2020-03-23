@@ -166,8 +166,8 @@ public class CompoundFuncTest {
             }
         };
 
-        IFunc1<Vocab, ExampleV2> f = (IFunc1<Vocab, ExampleV2>) new CompoundFuncBuilder()
-                .joinTo(transExample, getExample)
+        IFunc1<Vocab, ExampleV2> f = new CompoundFuncBuilder1<Vocab, ExampleV2>(getExample)
+                .addEnd(transExample, getExample)
                 .create();
 
         return f;
