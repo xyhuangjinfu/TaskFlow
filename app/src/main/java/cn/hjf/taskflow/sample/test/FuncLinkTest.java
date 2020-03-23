@@ -37,7 +37,7 @@ public class FuncLinkTest {
             }
         };
 
-        IFunc1<String, Integer> f = (IFunc1<String, Integer>) new FuncGraphBuilder()
+        IFunc1<String, String> f = (IFunc1<String, String>) new FuncGraphBuilder()
                 .joinTo(toResult, compare)
                 .joinTo(compare, toInt)
                 .create();

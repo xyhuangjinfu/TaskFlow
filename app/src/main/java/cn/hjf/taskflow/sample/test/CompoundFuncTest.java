@@ -11,7 +11,7 @@ import cn.hjf.taskflow.util.FuncExecutor;
 import cn.hjf.taskflow.util.FuncGraphBuilder;
 import cn.hjf.taskflow.util.IFunc1;
 
-public class FuncGraphTest {
+public class CompoundFuncTest {
 
     private class Vocab {
         String id;
@@ -46,6 +46,21 @@ public class FuncGraphTest {
         }
     }
 
+    private class ExampleV2 {
+        String content;
+
+        public ExampleV2(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public String toString() {
+            return "ExampleV2{" +
+                    "content='" + content + '\'' +
+                    '}';
+        }
+    }
+
     private class Favorite {
         String content;
 
@@ -63,10 +78,10 @@ public class FuncGraphTest {
 
     private class ViewData {
         Vocab vocab;
-        Example example;
+        ExampleV2 example;
         Favorite favorite;
 
-        public ViewData(Vocab vocab, Example example, Favorite favorite) {
+        public ViewData(Vocab vocab, ExampleV2 example, Favorite favorite) {
             this.vocab = vocab;
             this.example = example;
             this.favorite = favorite;
@@ -91,13 +106,7 @@ public class FuncGraphTest {
             }
         };
 
-        Func1<Vocab, Example> getExample = new Func1<Vocab, Example>() {
-            @NonNull
-            @Override
-            protected Example process(Vocab vocab) throws Exception {
-                return new Example("example of " + vocab.content);
-            }
-        };
+        IFunc1<Vocab, ExampleV2> getExample = getExampleByVocab();
 
         Func1<Vocab, Favorite> getFavorite = new Func1<Vocab, Favorite>() {
             @NonNull
@@ -107,10 +116,10 @@ public class FuncGraphTest {
             }
         };
 
-        Func3<Vocab, Example, Favorite, ViewData> mergeData = new Func3<Vocab, Example, Favorite, ViewData>() {
+        Func3<Vocab, ExampleV2, Favorite, ViewData> mergeData = new Func3<Vocab, ExampleV2, Favorite, ViewData>() {
             @NonNull
             @Override
-            protected ViewData process(Vocab vocab, Example example, Favorite favorite) throws Exception {
+            protected ViewData process(Vocab vocab, ExampleV2 example, Favorite favorite) throws Exception {
                 return new ViewData(vocab, example, favorite);
             }
         };
@@ -132,5 +141,28 @@ public class FuncGraphTest {
                 Log.e("O_O", "onError " + vocabId + " , " + e.getMessage());
             }
         }, vocabId);
+    }
+
+    private IFunc1<Vocab, ExampleV2> getExampleByVocab() {
+        Func1<Vocab, Example> getExample = new Func1<Vocab, Example>() {
+            @NonNull
+            @Override
+            protected Example process(Vocab vocab) throws Exception {
+                return new Example("example of " + vocab.content);
+            }
+        };
+        Func1<Example, ExampleV2> transExample = new Func1<Example, ExampleV2>() {
+            @NonNull
+            @Override
+            protected ExampleV2 process(Example e) throws Exception {
+                return new ExampleV2("examplev2 of " + e.content);
+            }
+        };
+
+        IFunc1<Vocab, ExampleV2> f = (IFunc1<Vocab, ExampleV2>) new FuncGraphBuilder()
+                .joinTo(transExample, getExample)
+                .create();
+
+        return f;
     }
 }
