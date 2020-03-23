@@ -138,7 +138,7 @@ public class TaskTransfer {
      * ***************************************************************************************************************
      */
 
-    public static Task createTaskFromExpandFunc(@NonNull IFunc endFunc) {
+    private static Task createTaskFromExpandFunc(@NonNull IFunc endFunc) {
         final Map<Func, Task> map = new HashMap<>();
 
         final Task[] start = new Task[1];
