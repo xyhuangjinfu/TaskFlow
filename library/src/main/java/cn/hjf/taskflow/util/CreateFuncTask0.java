@@ -14,7 +14,7 @@ class CreateFuncTask0 extends CreateFuncTask {
     @Override
     public Task createTask(Object... params) {
         IFunc start = ((FuncCreator0) mFuncCreator).createFunc();
-        Task task = cn.hjf.taskflow.util.TaskCreator.create(start);
+        Task task = TaskTransfer.create(start);
         return task;
     }
 }

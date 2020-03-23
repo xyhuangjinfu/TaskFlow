@@ -10,10 +10,13 @@ import cn.hjf.taskflow.core.Task;
 import cn.hjf.taskflow.graph.GraphVisitor;
 import cn.hjf.taskflow.graph.OnVisitListener;
 
-class TaskCreator {
+/**
+ * Utils to create task graph from func graph
+ */
+public class TaskTransfer {
 
     /**
-     * 从IFunc图构建对应的Task图
+     * create task graph from func graph.
      *
      * @param func
      * @return
@@ -21,16 +24,12 @@ class TaskCreator {
     public static Task create(@NonNull IFunc func) {
         checkNonNull(func);
 
-//        if (!func.getNextList().isEmpty()) {
-//            throw new IllegalArgumentException("func is not a single node");
-//        }
-
-        //展开Func图（Func图中可能有复合Func）
+        //Expand func graph, because it may contain compound func, task graph and execute engine don't support compound structure.
         IFunc end = traverseAndExpand(func)[1];
 
-        Task head = createTaskFromExpandFunc(end);
+        Task start = createTaskFromExpandFunc(end);
 
-        return head;
+        return start;
     }
 
     /**
@@ -62,13 +61,13 @@ class TaskCreator {
             @Override
             public void onVisit(IFunc f) {
                 if (f instanceof CompoundFunc) {
-                    Func[] newTerminal = expand((CompoundFunc) f);
-                    //如果 start 或者 end 是 复合结构，需要重新指向
+                    Func[] newBound = expand((CompoundFunc) f);
+                    //if start or end is compound structure, we need to re-point.
                     if (f == start) {
-                        startAndEnd[0] = newTerminal[0];
+                        startAndEnd[0] = newBound[0];
                     }
                     if (f == end) {
-                        startAndEnd[1] = newTerminal[1];
+                        startAndEnd[1] = newBound[1];
                     }
                 }
             }
@@ -91,7 +90,7 @@ class TaskCreator {
         Map<IFunc, Integer> preLinkMap = new HashMap<>();
         Map<IFunc, Integer> nextLinkMap = new HashMap<>();
 
-        //记录该组合节点在各父节点中的位置，断开父节点到该节点的引用
+        //record this compound func's position in it's parents and disconnect them.
         List<IFunc> preList = iFunc.getPreList();
         for (IFunc pre : preList) {
             int index = pre.getNextList().indexOf(iFunc);
@@ -99,7 +98,7 @@ class TaskCreator {
             preLinkMap.put(pre, index);
         }
 
-        //记录该组合节点在各子节点中的位置，断开子节点到该节点的引用
+        //record this compound func's position in it's children and disconnect them.
         List<IFunc> nextList = iFunc.getNextList();
         for (IFunc next : nextList) {
             int index = next.getPreList().indexOf(iFunc);
@@ -107,11 +106,11 @@ class TaskCreator {
             nextLinkMap.put(next, index);
         }
 
-        //展开该组合节点
-        Func[] newTerminal = traverseAndExpand(iFunc.getStart());
+        //do expand
+        Func[] newBound = traverseAndExpand(iFunc.getStart());
 
-        //把新start节点挂载到之前的父节点，并转移向父节点的引用
-        IFunc newStart = newTerminal[0];
+        //re-point start, to parents and children.
+        IFunc newStart = newBound[0];
         for (Map.Entry<IFunc, Integer> e : preLinkMap.entrySet()) {
             IFunc pre = e.getKey();
             int index = e.getValue();
@@ -120,8 +119,8 @@ class TaskCreator {
         newStart.getPreList().addAll(iFunc.getPreList());
         iFunc.getPreList().clear();
 
-        //把新end节点挂载到之前的子节点，并转移向子节点的引用
-        IFunc newEnd = newTerminal[1];
+        //re-point end, to parents and children.
+        IFunc newEnd = newBound[1];
         for (Map.Entry<IFunc, Integer> e : nextLinkMap.entrySet()) {
             IFunc next = e.getKey();
             int index = e.getValue();
@@ -130,7 +129,7 @@ class TaskCreator {
         newEnd.getNextList().addAll(iFunc.getNextList());
         iFunc.getNextList().clear();
 
-        return newTerminal;
+        return newBound;
     }
 
     /**
@@ -142,7 +141,7 @@ class TaskCreator {
     public static Task createTaskFromExpandFunc(@NonNull IFunc endFunc) {
         final Map<Func, Task> map = new HashMap<>();
 
-        final Task[] head = new Task[1];
+        final Task[] start = new Task[1];
 
         GraphVisitor.bfsBackward(endFunc, new OnVisitListener<IFunc>() {
             @Override
@@ -159,7 +158,7 @@ class TaskCreator {
                 Task task = getOrCreateTask(map, (Func) f);
 
                 if (f.getPreList().isEmpty()) {
-                    head[0] = task;
+                    start[0] = task;
                 }
 
                 List<Func> preList = f.getPreList();
@@ -179,7 +178,7 @@ class TaskCreator {
             }
         });
 
-        return head[0];
+        return start[0];
     }
 
     private static Task getOrCreateTask(Map<Func, Task> map, Func func) {

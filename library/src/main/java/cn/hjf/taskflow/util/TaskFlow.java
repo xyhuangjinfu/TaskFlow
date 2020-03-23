@@ -175,7 +175,7 @@ public final class TaskFlow<R> {
     }
 
     private static Task getTask(IFunc func) {
-        Task startTask = new TaskCreator().create(func);
+        Task startTask = new TaskTransfer().create(func);
         return startTask;
     }
 
