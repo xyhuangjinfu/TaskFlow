@@ -184,7 +184,7 @@ public class TaskTransfer {
     private static Task getOrCreateTask(Map<Func, Task> map, Func func) {
         Task task = map.get(func);
         if (task == null) {
-            task = FuncTaskCreator.create(func);
+            task = TaskGenerator.create(func);
             map.put(func, task);
         }
         return task;
