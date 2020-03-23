@@ -1,6 +1,5 @@
 package cn.hjf.taskflow.sample;
 
-import android.telecom.Call;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -105,7 +104,7 @@ public class Sample {
         };
 
         IFunc1<Vocab, ExampleV2> fetchAndTransExample = (IFunc1<Vocab, ExampleV2>) new FuncGraphBuilder()
-                .joinTo(fetchExample, transExample)
+                .joinTo(transExample, fetchExample)
                 .create();
 
         Func1<String, String> ff = new Func1<String, String>() {
@@ -131,22 +130,22 @@ public class Sample {
 
         IFunc0<SearchData> f = (IFunc0<SearchData>) new TaskFlow()
 
-                .joinTo(fetchVocab, fetchAndTransExample)
+                .joinTo(fetchAndTransExample, fetchVocab)
 
-                .joinTo(fetchVocab, fetchFavorite)
-                .joinTo(fetchVocab, fetchAndTransExample, fetchFavorite, mergeData)
+                .joinTo(fetchFavorite, fetchVocab)
+                .joinTo(mergeData, fetchVocab, fetchAndTransExample, fetchFavorite)
                 .create();
-                TaskFlow.execute(f, new Callback<SearchData>() {
-                    @Override
-                    public void onComplete(SearchData o) {
-                        Log.e("O_O", o.s);
-                    }
+        TaskFlow.execute(f, new Callback<SearchData>() {
+            @Override
+            public void onComplete(SearchData o) {
+                Log.e("O_O", o.s);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("O_O", e.getMessage());
-                    }
-                });
+            @Override
+            public void onError(Throwable e) {
+                Log.e("O_O", e.getMessage());
+            }
+        });
     }
 
     class User {
@@ -156,6 +155,7 @@ public class Sample {
             this.name = name;
         }
     }
+
     class Friend {
         String name;
 
@@ -163,6 +163,7 @@ public class Sample {
             this.name = name;
         }
     }
+
     class FriendDetail {
         Friend mFriend;
         String comment;
@@ -172,6 +173,7 @@ public class Sample {
             this.comment = comment;
         }
     }
+
     class MergeData {
         User mUser;
         List<FriendDetail> mFriendDetails;
@@ -182,9 +184,7 @@ public class Sample {
         }
     }
 
-
     public void f2() {
-
 
         Task queryUser = new Task("queryUser") {
             @NonNull
@@ -281,10 +281,7 @@ public class Sample {
                 Log.e("O_O", e.getMessage());
             }
         });
-
     }
-
-
 
     public void f3() {
         IFunc0<User> queryUser = new Func0<User>("queryUser") {
@@ -310,10 +307,10 @@ public class Sample {
 
         IFunc1<List<Friend>, List<FriendDetail>> queryFriendDetailTaskCreator = new FuncCreator1<List<Friend>, List<FriendDetail>>("queryFriendDetailTaskCreator") {
             @Override
-            protected IFunc[] createFunc(List<Friend> p) {
+            protected IFunc createFunc(List<Friend> p) {
                 Log.e("O_O", "queryFriendDetailTaskCreator " + Thread.currentThread().getName());
 
-                IFunc1<List<Friend>,List<Friend>> start = new Func1<List<Friend>, List<Friend>>("start") {
+                IFunc1<List<Friend>, List<Friend>> start = new Func1<List<Friend>, List<Friend>>("start") {
                     @NonNull
                     @Override
                     public List<Friend> process(List<Friend> friendList) throws Exception {
@@ -338,7 +335,6 @@ public class Sample {
                 int num = 0;
                 for (Friend o : p) {
 
-
                     final int index = num;
                     IFunc1<List<Friend>, FriendDetail> query = new Func1<List<Friend>, FriendDetail>("query " + num) {
                         @NonNull
@@ -355,7 +351,7 @@ public class Sample {
                     num++;
                 }
 
-                return new IFunc[]{start, end};
+                return start;
             }
         };
 
@@ -386,9 +382,9 @@ public class Sample {
 //                });
 
         IFunc0<MergeData> f = (IFunc0<MergeData>) new TaskFlow<MergeData>()
-                        .joinTo(queryUser, queryFriendList)
-                .joinTo(queryFriendList, queryFriendDetailTaskCreator)
-                .joinTo(queryUser, queryFriendDetailTaskCreator, mergeData)
+                .joinTo(queryFriendList, queryUser)
+                .joinTo(queryFriendDetailTaskCreator, queryFriendList)
+                .joinTo(mergeData, queryUser, queryFriendDetailTaskCreator)
                 .create();
         TaskFlow.execute(f, new Callback() {
             @Override
@@ -401,7 +397,5 @@ public class Sample {
                 Log.e("O_O", e.getMessage());
             }
         });
-
-
     }
 }
