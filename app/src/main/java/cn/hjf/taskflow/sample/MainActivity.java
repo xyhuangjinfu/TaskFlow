@@ -23,17 +23,17 @@ public class MainActivity extends AppCompatActivity {
 //        new Sample().f2();
 //        new Sample().f3();
 
-//        new SingleFuncTest().toInt("123");
-//        new SingleFuncTest().toInt("123ss");
-//        new SingleFuncTest().toIntDealWithException("123ss");
-//
-//        new FuncLinkTest().testPass("40");
-//        new FuncLinkTest().testPass("80");
-//        new FuncLinkTest().testPass("80a");
+        new SingleFuncTest().toInt("123");
+        new SingleFuncTest().toInt("123ss");
+        new SingleFuncTest().toIntDealWithException("123ss");
 
-//        new FuncGraphTest().testData("abcd");
+        new FuncLinkTest().testPass("40");
+        new FuncLinkTest().testPass("80");
+        new FuncLinkTest().testPass("80a");
 
-//        new CompoundFuncTest().testData("abcdef");
+        new FuncGraphTest().testData("abcd");
+
+        new CompoundFuncTest().testData("abcdef");
 
         new FuncCreatorTest().test("hjf");
     }

@@ -1,6 +1,6 @@
 package cn.hjf.taskflow.util;
 
-public abstract class FuncCreator<R> extends Func<R> {
+abstract class FuncCreator<R> extends Func<R> {
 
     public FuncCreator() {
     }
