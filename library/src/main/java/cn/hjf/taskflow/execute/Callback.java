@@ -6,7 +6,7 @@ package cn.hjf.taskflow.execute;
  * @param <T>
  */
 public interface Callback<T> {
-    void onComplete(T o);
+    void onComplete(T t);
 
     void onError(Throwable e);
 }
