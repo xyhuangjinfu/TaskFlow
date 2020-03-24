@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.Func1;
-import cn.hjf.taskflow.util.FuncExecutor;
 
 public class SingleFuncTest {
 
@@ -19,7 +18,19 @@ public class SingleFuncTest {
             }
         };
 
-        FuncExecutor.execute(f, new Callback<Integer>() {
+//        FuncExecutor.execute(f, new Callback<Integer>() {
+//            @Override
+//            public void onComplete(Integer o) {
+//                Log.e("O_O", "onComplete " + value + " , " + o);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("O_O", "onError " + value + " , " + e.getMessage());
+//            }
+//        }, value);
+
+        f.execute(new Callback<Integer>() {
             @Override
             public void onComplete(Integer o) {
                 Log.e("O_O", "onComplete " + value + " , " + o);
@@ -45,15 +56,27 @@ public class SingleFuncTest {
             }
         };
 
-        FuncExecutor.execute(f, new Callback<Integer>() {
+//        FuncExecutor.execute(f, new Callback<Integer>() {
+//            @Override
+//            public void onComplete(Integer o) {
+//                Log.e("O_O", "onComplete " + value + " , " + o);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("O_O", "onError " + value + " , " + e.getMessage());
+//            }
+//        }, value);
+
+        f.execute(new Callback<Integer>() {
             @Override
             public void onComplete(Integer o) {
-                Log.e("O_O", "onComplete " + value + " , " + o);
+
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("O_O", "onError " + value + " , " + e.getMessage());
+
             }
         }, value);
     }

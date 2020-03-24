@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func1;
-import cn.hjf.taskflow.util.FuncExecutor;
 import cn.hjf.taskflow.util.IFunc1;
 
 public class FuncLinkTest {
@@ -40,7 +39,19 @@ public class FuncLinkTest {
                 .addNormal(compare, toInt)
                 .create();
 
-        FuncExecutor.execute(f, new Callback<String>() {
+//        FuncExecutor.execute(f, new Callback<String>() {
+//            @Override
+//            public void onComplete(String o) {
+//                Log.e("O_O", "onComplete " + value + " , " + o);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("O_O", "onError " + value + " , " + e.getMessage());
+//            }
+//        }, value);
+
+        f.execute(new Callback<String>() {
             @Override
             public void onComplete(String o) {
                 Log.e("O_O", "onComplete " + value + " , " + o);

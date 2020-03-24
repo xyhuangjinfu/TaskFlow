@@ -12,7 +12,6 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.FuncCreator1;
-import cn.hjf.taskflow.util.FuncExecutor;
 import cn.hjf.taskflow.util.FuncN;
 import cn.hjf.taskflow.util.IFunc;
 import cn.hjf.taskflow.util.IFunc1;
@@ -84,7 +83,19 @@ public class FuncCreatorTest {
                 .addEnd(creator1, getFriendIdList)
                 .create();
 
-        FuncExecutor.execute(getAllFriend, new Callback<List<Friend>>() {
+//        FuncExecutor.execute(getAllFriend, new Callback<List<Friend>>() {
+//            @Override
+//            public void onComplete(List<Friend> o) {
+//                Log.e("O_O", "onComplete " + userId + " , " + o);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("O_O", "onError " + userId + " , " + e.getMessage());
+//            }
+//        }, userId);
+
+        getAllFriend.execute(new Callback<List<Friend>>() {
             @Override
             public void onComplete(List<Friend> o) {
                 Log.e("O_O", "onComplete " + userId + " , " + o);

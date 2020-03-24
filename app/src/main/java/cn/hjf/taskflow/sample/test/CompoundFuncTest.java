@@ -8,7 +8,6 @@ import cn.hjf.taskflow.execute.Callback;
 import cn.hjf.taskflow.util.CompoundFuncBuilder1;
 import cn.hjf.taskflow.util.Func1;
 import cn.hjf.taskflow.util.Func3;
-import cn.hjf.taskflow.util.FuncExecutor;
 import cn.hjf.taskflow.util.IFunc1;
 
 public class CompoundFuncTest {
@@ -136,7 +135,19 @@ public class CompoundFuncTest {
                 .addNormal(getFavorite, getVocab)
                 .create();
 
-        FuncExecutor.execute(cf, new Callback<ViewData>() {
+//        FuncExecutor.execute(cf, new Callback<ViewData>() {
+//            @Override
+//            public void onComplete(ViewData o) {
+//                Log.e("O_O", "onComplete " + vocabId + " , " + o);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                Log.e("O_O", "onError " + vocabId + " , " + e.getMessage());
+//            }
+//        }, vocabId);
+
+        cf.execute(new Callback<ViewData>() {
             @Override
             public void onComplete(ViewData o) {
                 Log.e("O_O", "onComplete " + vocabId + " , " + o);
