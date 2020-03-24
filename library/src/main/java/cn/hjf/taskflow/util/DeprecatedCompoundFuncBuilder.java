@@ -79,57 +79,57 @@ public class DeprecatedCompoundFuncBuilder {
      */
 
     public <R1, R> DeprecatedCompoundFuncBuilder joinTo(IFunc1<R1, R> joinTo, IFunc<R1> f1) {
-        mGraphBuilder.joinTo(joinTo, f1);
+        mGraphBuilder.addFunc(joinTo, f1);
         return this;
     }
 
     public <R1, R2, R> DeprecatedCompoundFuncBuilder joinTo(IFunc2<R1, R2, R> joinTo, IFunc<R1> f1, IFunc<R2> f2) {
-        mGraphBuilder.joinTo(joinTo, f1, f2);
+        mGraphBuilder.addFunc(joinTo, f1, f2);
         return this;
     }
 
     public <R1, R2, R3, R> DeprecatedCompoundFuncBuilder joinTo(IFunc3<R1, R2, R3, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3);
         return this;
     }
 
     public <R1, R2, R3, R4, R> DeprecatedCompoundFuncBuilder joinTo(IFunc4<R1, R2, R3, R4, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R> DeprecatedCompoundFuncBuilder joinTo(IFunc5<R1, R2, R3, R4, R5, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R> DeprecatedCompoundFuncBuilder joinTo(IFunc6<R1, R2, R3, R4, R5, R6, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5, f6);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R> DeprecatedCompoundFuncBuilder joinTo(IFunc7<R1, R2, R3, R4, R5, R6, R7, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5, f6, f7);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R8, R> DeprecatedCompoundFuncBuilder joinTo(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5, f6, f7, f8);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R> DeprecatedCompoundFuncBuilder joinTo(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9);
         return this;
     }
 
     public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> DeprecatedCompoundFuncBuilder joinTo(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10) {
-        mGraphBuilder.joinTo(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10);
+        mGraphBuilder.addFunc(joinTo, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10);
         return this;
     }
 
     public DeprecatedCompoundFuncBuilder joinTo(IFuncN joinTo, IFunc... funcs) {
-        mGraphBuilder.joinTo(joinTo, funcs);
+        mGraphBuilder.addFunc(joinTo, funcs);
         return this;
     }
 }

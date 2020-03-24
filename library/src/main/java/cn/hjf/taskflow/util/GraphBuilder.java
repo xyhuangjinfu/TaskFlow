@@ -102,217 +102,217 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R> void joinTo(IFunc1<R, ?> joinTo, IFunc<R> f1) {
-        checkNotJoined(joinTo);
+    public <R> void addFunc(IFunc1<R, ?> func, IFunc<R> preFunc) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
+        func.after(preFunc);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2> void joinTo(IFunc2<R1, R2, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2) {
-        checkNotJoined(joinTo);
+    public <R1, R2> void addFunc(IFunc2<R1, R2, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
+        func.after(preFunc1);
+        func.after(preFunc2);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3> void joinTo(IFunc3<R1, R2, R3, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3> void addFunc(IFunc3<R1, R2, R3, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4> void joinTo(IFunc4<R1, R2, R3, R4, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4> void addFunc(IFunc4<R1, R2, R3, R4, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5> void joinTo(IFunc5<R1, R2, R3, R4, R5, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5> void addFunc(IFunc5<R1, R2, R3, R4, R5, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6> void joinTo(IFunc6<R1, R2, R3, R4, R5, R6, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5, R6> void addFunc(IFunc6<R1, R2, R3, R4, R5, R6, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
-        joinTo.after(f6);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
+        func.after(preFunc6);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(f6);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(preFunc6);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7> void joinTo(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7> void addFunc(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
-        joinTo.after(f6);
-        joinTo.after(f7);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
+        func.after(preFunc6);
+        func.after(preFunc7);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(f6);
-        mFuncSet.add(f7);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(preFunc6);
+        mFuncSet.add(preFunc7);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8> void joinTo(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8> void addFunc(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
-        joinTo.after(f6);
-        joinTo.after(f7);
-        joinTo.after(f8);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
+        func.after(preFunc6);
+        func.after(preFunc7);
+        func.after(preFunc8);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(f6);
-        mFuncSet.add(f7);
-        mFuncSet.add(f8);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(preFunc6);
+        mFuncSet.add(preFunc7);
+        mFuncSet.add(preFunc8);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> void joinTo(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> void addFunc(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
-        joinTo.after(f6);
-        joinTo.after(f7);
-        joinTo.after(f8);
-        joinTo.after(f9);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
+        func.after(preFunc6);
+        func.after(preFunc7);
+        func.after(preFunc8);
+        func.after(preFunc9);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(f6);
-        mFuncSet.add(f7);
-        mFuncSet.add(f8);
-        mFuncSet.add(f9);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(preFunc6);
+        mFuncSet.add(preFunc7);
+        mFuncSet.add(preFunc8);
+        mFuncSet.add(preFunc9);
+        mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> void joinTo(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> joinTo, IFunc<R1> f1, IFunc<R2> f2, IFunc<R3> f3, IFunc<R4> f4, IFunc<R5> f5, IFunc<R6> f6, IFunc<R7> f7, IFunc<R8> f8, IFunc<R9> f9, IFunc<R10> f10) {
-        checkNotJoined(joinTo);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> void addFunc(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9, IFunc<R10> preFunc10) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        joinTo.after(f1);
-        joinTo.after(f2);
-        joinTo.after(f3);
-        joinTo.after(f4);
-        joinTo.after(f5);
-        joinTo.after(f6);
-        joinTo.after(f7);
-        joinTo.after(f8);
-        joinTo.after(f9);
-        joinTo.after(f10);
+        func.after(preFunc1);
+        func.after(preFunc2);
+        func.after(preFunc3);
+        func.after(preFunc4);
+        func.after(preFunc5);
+        func.after(preFunc6);
+        func.after(preFunc7);
+        func.after(preFunc8);
+        func.after(preFunc9);
+        func.after(preFunc10);
 
-        mFuncSet.add(f1);
-        mFuncSet.add(f2);
-        mFuncSet.add(f3);
-        mFuncSet.add(f4);
-        mFuncSet.add(f5);
-        mFuncSet.add(f6);
-        mFuncSet.add(f7);
-        mFuncSet.add(f8);
-        mFuncSet.add(f9);
-        mFuncSet.add(f10);
-        mFuncSet.add(joinTo);
+        mFuncSet.add(preFunc1);
+        mFuncSet.add(preFunc2);
+        mFuncSet.add(preFunc3);
+        mFuncSet.add(preFunc4);
+        mFuncSet.add(preFunc5);
+        mFuncSet.add(preFunc6);
+        mFuncSet.add(preFunc7);
+        mFuncSet.add(preFunc8);
+        mFuncSet.add(preFunc9);
+        mFuncSet.add(preFunc10);
+        mFuncSet.add(func);
     }
 
-    public void joinTo(IFuncN joinTo, IFunc... funcs) {
-        checkNotJoined(joinTo);
+    public void addFunc(IFuncN func, IFunc... preFuncs) {
+        checkNotJoined(func);
 
-        mJoinedFuncSet.add(joinTo);
+        mJoinedFuncSet.add(func);
 
-        for (IFunc f : funcs) {
-            joinTo.after(f);
+        for (IFunc f : preFuncs) {
+            func.after(f);
             mFuncSet.add(f);
         }
 
-        mFuncSet.add(joinTo);
+        mFuncSet.add(func);
     }
 
     /**
