@@ -19,9 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.e("O_O", "---------------------------------------------------------------------");
-//        new Sample().f1();
-//        new Sample().f2();
-//        new Sample().f3();
 
         new SingleFuncTest().toInt("123");
         new SingleFuncTest().toInt("123ss");
