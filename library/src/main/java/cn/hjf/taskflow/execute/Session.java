@@ -19,6 +19,11 @@ public class Session {
     }
 
     synchronized void onFinish(Object result, Throwable error) {
+        //check cancel status before execute callback.
+        if (mCanceled) {
+            return;
+        }
+
         if (mIsFinished) {
             return;
         }

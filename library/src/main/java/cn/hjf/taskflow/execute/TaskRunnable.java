@@ -9,9 +9,9 @@ import cn.hjf.taskflow.core.TaskCreator;
 import cn.hjf.taskflow.graph.GraphVisitor;
 
 /**
- * 执行Task的对象，被放到线程池中执行。
+ * Runnable to execute a task, will be execute in the thread pool.
  * <p>
- * 每个TaskRunnable应该只被放进执行队列一次，除非任务被取消。
+ * Each TaskRunnable instance should only be submitted once.
  */
 class TaskRunnable implements Runnable {
 
@@ -26,11 +26,11 @@ class TaskRunnable implements Runnable {
     }
 
     /**
-     * 父节点执行完成后，向子节点添加自己的执行结果，以便子节点后续执行。
+     * When pre task complete, they add parameter into next task.
      *
      * @param preTaskId
      * @param param
-     * @return 当该task所有参数齐了，返回true，否则返回false
+     * @return when all parameters reay, return true.
      */
     private synchronized boolean addParam(long preTaskId, Object param) {
         mParamMap.put(preTaskId, param);
@@ -48,7 +48,19 @@ class TaskRunnable implements Runnable {
 
     @Override
     public void run() {
+        //check cancel status, avoid to run time-consuming process method.
+        if (mSession.isCanceled()) {
+            TaskRunnablePool.remove(mSession);
+            return;
+        }
+
         internalRun();
+
+        //check cancel status, avoid to some task add task runnable after other task cleared.
+        if (mSession.isCanceled()) {
+            TaskRunnablePool.remove(mSession);
+            return;
+        }
     }
 
     /**
@@ -59,11 +71,6 @@ class TaskRunnable implements Runnable {
 
     private void internalRun() {
         final boolean isEndTask = isEndTask();
-
-        if (mSession.isCanceled()) {
-            TaskRunnablePool.remove(mSession);
-            return;
-        }
 
         try {
             Object result = runTask();
@@ -93,24 +100,31 @@ class TaskRunnable implements Runnable {
     }
 
     private Object runNormalTask() throws Exception {
-        //执行任务
+        //do process
         Object result = mTask.process(mParams);
 
-        //操作子任务
+        //operate next tasks
         for (Task nextTask : mTask.getNextList()) {
+            //check cancel status before create new task runnable.
+            if (mSession.isCanceled()) {
+                TaskRunnablePool.remove(mSession);
+                break;
+            }
+
             TaskRunnable nextTaskRunnable = TaskRunnablePool.getOrCreate(mSession, nextTask);
 
             boolean paramsReady = nextTaskRunnable.addParam(mTask.getId(), result);
             if (paramsReady) {
-                //参数完备，从参数等待区移除
+                //Params ready, remove from waiting area.
                 TaskRunnablePool.remove(mSession, nextTask);
 
-                //做一次取消状态检测
-                if (!mSession.isCanceled()) {
-                    Engine.execute(nextTaskRunnable);
-                } else {
+                //check cancel status before execute task runnable.
+                if (mSession.isCanceled()) {
                     TaskRunnablePool.remove(mSession);
+                    break;
                 }
+
+                Engine.execute(nextTaskRunnable);
             }
         }
 
@@ -121,28 +135,35 @@ class TaskRunnable implements Runnable {
         Task start = ((TaskCreator) mTask).createTask(mParams);
         Task end = GraphVisitor.findEnd(start);
 
-        //每一个子节点变更父节点为end
+        //relink all next tasks to new end task
         List<Task> nextList = mTask.getNextList();
         for (Task nextTask : nextList) {
             List<Task> preListOfNextTask = nextTask.getPreList();
             int index = preListOfNextTask.indexOf(mTask);
             preListOfNextTask.set(index, end);
         }
-        //end引用当前节点的所有子节点
+        //link end task to all next tasks
         end.setNextList(mTask.getNextList());
         mTask.getNextList().clear();
+
+        //check cancel status before create task runnable.
+        if (mSession.isCanceled()) {
+            TaskRunnablePool.remove(mSession);
+            return null;
+        }
 
         //run start
         TaskRunnable startTaskRunnable = TaskRunnablePool.getOrCreate(mSession, start);
         startTaskRunnable.setParams(mParams);
         TaskRunnablePool.remove(mSession, start);
 
-        //做一次取消状态检测
-        if (!mSession.isCanceled()) {
-            Engine.execute(startTaskRunnable);
-        } else {
+        //check cancel status before execute task runnable.
+        if (mSession.isCanceled()) {
             TaskRunnablePool.remove(mSession);
+            return null;
         }
+
+        Engine.execute(startTaskRunnable);
 
         return null;
     }
@@ -154,7 +175,7 @@ class TaskRunnable implements Runnable {
      */
 
     /**
-     * 是否是最后一个Task
+     * check whether it is the last task.
      *
      * @return
      */
