@@ -118,8 +118,7 @@ class TaskRunnable implements Runnable {
     }
 
     private Object runTaskCreator() throws Exception {
-        Object result = (mTask).process(mParams);
-        Task start = (Task) result;
+        Task start = ((TaskCreator) mTask).createTask(mParams);
         Task end = GraphVisitor.findEnd(start);
 
         //每一个子节点变更父节点为end
