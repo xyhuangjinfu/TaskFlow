@@ -124,10 +124,9 @@ class TaskRunnable implements Runnable {
         //每一个子节点变更父节点为end
         List<Task> nextList = mTask.getNextList();
         for (Task nextTask : nextList) {
-            List<Task> preListOfNextList = nextTask.getPreList();
-            int index = preListOfNextList.indexOf(mTask);
-            preListOfNextList.remove(index);
-            preListOfNextList.add(index, end);
+            List<Task> preListOfNextTask = nextTask.getPreList();
+            int index = preListOfNextTask.indexOf(mTask);
+            preListOfNextTask.set(index, end);
         }
         //end引用当前节点的所有子节点
         end.setNextList(mTask.getNextList());
