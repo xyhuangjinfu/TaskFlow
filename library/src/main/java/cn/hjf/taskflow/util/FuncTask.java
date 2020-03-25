@@ -1,7 +1,5 @@
 package cn.hjf.taskflow.util;
 
-import java.util.Arrays;
-
 import cn.hjf.taskflow.core.Task;
 
 abstract class FuncTask extends Task {
@@ -14,9 +12,11 @@ abstract class FuncTask extends Task {
         func.setAttached(true);
     }
 
-    protected void checkParameterCount(int paramCount, Object... params) {
-        if (params.length != paramCount) {
-            throw new RuntimeException("parameter count error for " + getName() + ", need " + paramCount + " parameters, but received " + params.length + ", " + Arrays.toString(params));
-        }
+    @Override
+    public String toString() {
+        return "FuncTask{" +
+                "mName='" + mName + '\'' +
+                ", mId=" + mId +
+                '}';
     }
 }
