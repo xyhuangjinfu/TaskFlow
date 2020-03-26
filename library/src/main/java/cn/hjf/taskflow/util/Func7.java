@@ -12,5 +12,5 @@ public abstract class Func7<P1, P2, P3, P4, P5, P6, P7, R> extends Func<R> imple
     }
 
     @NonNull
-    protected abstract R process(P1 p, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) throws Exception;
+    protected abstract R process(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7) throws Exception;
 }

@@ -12,5 +12,5 @@ public abstract class Func4<P1, P2, P3, P4, R> extends Func<R> implements IFunc4
     }
 
     @NonNull
-    protected abstract R process(P1 p, P2 p2, P3 p3, P4 p4) throws Exception;
+    protected abstract R process(P1 p1, P2 p2, P3 p3, P4 p4) throws Exception;
 }

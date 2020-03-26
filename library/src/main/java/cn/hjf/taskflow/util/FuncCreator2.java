@@ -12,5 +12,5 @@ public abstract class FuncCreator2<P1, P2, R> extends FuncCreator<R> implements 
     }
 
     @NonNull
-    protected abstract IFunc createFunc(P1 p, P2 p2);
+    protected abstract IFunc createFunc(P1 p1, P2 p2);
 }
