@@ -7,7 +7,7 @@ class FuncTask0 extends FuncTask {
     }
 
     @Override
-    public Object process(Object... params) throws Exception {
+    public Object process(Object... params) throws Throwable {
         CheckParamUtil.checkParameterCount(getName(), 0, params);
         return ((Func0) mFunc).process();
     }

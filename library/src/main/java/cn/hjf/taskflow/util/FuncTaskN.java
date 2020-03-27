@@ -7,7 +7,7 @@ class FuncTaskN extends FuncTask {
     }
 
     @Override
-    public Object process(Object... params) throws Exception {
+    public Object process(Object... params) throws Throwable {
         return ((FuncN) mFunc).process(params);
     }
 }

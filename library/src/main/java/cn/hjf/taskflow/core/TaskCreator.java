@@ -19,7 +19,7 @@ public abstract class TaskCreator extends Task {
 
     @NonNull
     @Override
-    public final Object process(Object... params) throws Exception {
+    public final Object process(Object... params) throws Throwable {
         throw new UnsupportedOperationException("don't call process() method on TaskCreator, call createTask() instead.");
     }
 

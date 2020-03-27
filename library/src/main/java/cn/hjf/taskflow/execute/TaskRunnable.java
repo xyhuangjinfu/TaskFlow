@@ -77,12 +77,12 @@ class TaskRunnable implements Runnable {
             if (isEndTask) {
                 mSession.onFinish(result, null);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             mSession.onFinish(null, e);
         }
     }
 
-    private Object runTask() throws Exception {
+    private Object runTask() throws Throwable {
         //prepare params, order sensitive
         if (mParams == null) {
             List<Task> preTaskList = mTask.getPreList();
@@ -99,7 +99,7 @@ class TaskRunnable implements Runnable {
         }
     }
 
-    private Object runNormalTask() throws Exception {
+    private Object runNormalTask() throws Throwable {
         //do process
         Object result = mTask.process(mParams);
 
@@ -131,7 +131,7 @@ class TaskRunnable implements Runnable {
         return result;
     }
 
-    private Object runTaskCreator() throws Exception {
+    private Object runTaskCreator() throws Throwable {
         Task start = ((TaskCreator) mTask).createTask(mParams);
         Task end = GraphVisitor.findEnd(start);
 

@@ -12,5 +12,5 @@ public abstract class Func1<P, R> extends Func<R> implements IFunc1<P, R> {
     }
 
     @NonNull
-    protected abstract R process(P p) throws Exception;
+    protected abstract R process(P p) throws Throwable;
 }

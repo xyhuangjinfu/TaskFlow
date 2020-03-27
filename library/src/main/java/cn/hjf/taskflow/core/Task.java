@@ -77,8 +77,8 @@ public abstract class Task extends AbsVertex<Task> {
      *
      * @param params
      * @return
-     * @throws Exception
+     * @throws Throwable
      */
     @NonNull
-    public abstract Object process(Object... params) throws Exception;
+    public abstract Object process(Object... params) throws Throwable;
 }

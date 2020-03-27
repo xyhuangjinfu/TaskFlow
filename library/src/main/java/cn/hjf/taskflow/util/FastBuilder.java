@@ -8,7 +8,7 @@ public class FastBuilder {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
-            protected Void process() throws Exception {
+            protected Void process() throws Throwable {
                 return null;
             }
         };
@@ -22,7 +22,7 @@ public class FastBuilder {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
-            protected Void process() throws Exception {
+            protected Void process() throws Throwable {
                 return null;
             }
         };
@@ -37,7 +37,7 @@ public class FastBuilder {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
-            protected Void process() throws Exception {
+            protected Void process() throws Throwable {
                 return null;
             }
         };
@@ -53,7 +53,7 @@ public class FastBuilder {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
-            protected Void process() throws Exception {
+            protected Void process() throws Throwable {
                 return null;
             }
         };
@@ -70,7 +70,7 @@ public class FastBuilder {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
-            protected Void process() throws Exception {
+            protected Void process() throws Throwable {
                 return null;
             }
         };
