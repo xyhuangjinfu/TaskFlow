@@ -1,6 +1,94 @@
 package cn.hjf.taskflow.util;
 
+import androidx.annotation.NonNull;
+
 public class FastBuilder {
+
+    public static <R1, RE> IFunc0<RE> unionWithoutStart(IFunc1<R1, RE> end, IFunc1<Void, R1> f1) {
+        final IFunc0<Void> start = new Func0<Void>() {
+            @NonNull
+            @Override
+            protected Void process() throws Exception {
+                return null;
+            }
+        };
+        CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
+        b.addEnd(end, f1);
+        b.addNormal(f1, start);
+        return b.create();
+    }
+
+    public static <R1, R2, RE> IFunc0<RE> unionWithoutStart(IFunc2<R1, R2, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2) {
+        final IFunc0<Void> start = new Func0<Void>() {
+            @NonNull
+            @Override
+            protected Void process() throws Exception {
+                return null;
+            }
+        };
+        CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
+        b.addEnd(end, f1, f2);
+        b.addNormal(f1, start);
+        b.addNormal(f2, start);
+        return b.create();
+    }
+
+    public static <R1, R2, R3, RE> IFunc0<RE> unionWithoutStart(IFunc3<R1, R2, R3, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3) {
+        final IFunc0<Void> start = new Func0<Void>() {
+            @NonNull
+            @Override
+            protected Void process() throws Exception {
+                return null;
+            }
+        };
+        CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
+        b.addEnd(end, f1, f2, f3);
+        b.addNormal(f1, start);
+        b.addNormal(f2, start);
+        b.addNormal(f3, start);
+        return b.create();
+    }
+
+    public static <R1, R2, R3, R4, RE> IFunc0<RE> unionWithoutStart(IFunc4<R1, R2, R3, R4, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3, IFunc1<Void, R4> f4) {
+        final IFunc0<Void> start = new Func0<Void>() {
+            @NonNull
+            @Override
+            protected Void process() throws Exception {
+                return null;
+            }
+        };
+        CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
+        b.addEnd(end, f1, f2, f3, f4);
+        b.addNormal(f1, start);
+        b.addNormal(f2, start);
+        b.addNormal(f3, start);
+        b.addNormal(f4, start);
+        return b.create();
+    }
+
+    public static <R1, R2, R3, R4, R5, RE> IFunc0<RE> unionWithoutStart(IFunc5<R1, R2, R3, R4, R5, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3, IFunc1<Void, R4> f4, IFunc1<Void, R5> f5) {
+        final IFunc0<Void> start = new Func0<Void>() {
+            @NonNull
+            @Override
+            protected Void process() throws Exception {
+                return null;
+            }
+        };
+        CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
+        b.addEnd(end, f1, f2, f3, f4, f5);
+        b.addNormal(f1, start);
+        b.addNormal(f2, start);
+        b.addNormal(f3, start);
+        b.addNormal(f4, start);
+        b.addNormal(f5, start);
+        return b.create();
+    }
+
+    /**
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
 
     public static <RS, R1, RE> IFunc0<RE> union(IFunc0<RS> start, IFunc1<R1, RE> end, IFunc1<RS, R1> f1) {
         CompoundFuncBuilder0<RE> b = new CompoundFuncBuilder0<>(start);
