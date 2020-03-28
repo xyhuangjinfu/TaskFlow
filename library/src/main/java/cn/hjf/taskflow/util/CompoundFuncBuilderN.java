@@ -12,7 +12,7 @@ public class CompoundFuncBuilderN<Return> extends CompoundFuncBuilder {
      * ***************************************************************************************************************
      */
 
-    public CompoundFuncN<Return> create() {
+    public IFuncN<Return> create() {
         if (!mHaveEnd) {
             throw new RuntimeException("must call addEnd() once before call cerate()");
         }

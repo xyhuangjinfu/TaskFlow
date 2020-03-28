@@ -12,7 +12,7 @@ public class CompoundFuncBuilder5<Param1, Param2, Param3, Param4, Param5, Return
      * ***************************************************************************************************************
      */
 
-    public CompoundFunc5<Param1, Param2, Param3, Param4, Param5, Return> create() {
+    public IFunc5<Param1, Param2, Param3, Param4, Param5, Return> create() {
         if (!mHaveEnd) {
             throw new RuntimeException("must call addEnd() once before call cerate()");
         }

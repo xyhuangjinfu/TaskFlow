@@ -12,7 +12,7 @@ public class CompoundFuncBuilder2<Param1, Param2, Return> extends CompoundFuncBu
      * ***************************************************************************************************************
      */
 
-    public CompoundFunc2<Param1, Param2, Return> create() {
+    public IFunc2<Param1, Param2, Return> create() {
         if (!mHaveEnd) {
             throw new RuntimeException("must call addEnd() once before call cerate()");
         }
