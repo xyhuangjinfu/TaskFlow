@@ -11,7 +11,7 @@ class FuncTask0 extends FuncTask {
     @Nullable
     @Override
     public Object process(Object... params) throws Throwable {
-        CheckParamUtil.checkParameterCount(getName(), 0, params);
+        CheckParamUtil.checkParameterForIFunc0(getName(), params);
         return ((Func0) mFunc).process();
     }
 }

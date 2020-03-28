@@ -13,7 +13,7 @@ class CreateFuncTask0 extends CreateFuncTask {
     @NonNull
     @Override
     public Task createTask(Object... params) {
-        CheckParamUtil.checkParameterCount(getName(), 0, params);
+        CheckParamUtil.checkParameterForIFunc0(getName(), params);
         IFunc start = ((FuncCreator0) mFuncCreator).createFunc();
         Task task = TaskGraphTransfer.create(start);
         return task;
