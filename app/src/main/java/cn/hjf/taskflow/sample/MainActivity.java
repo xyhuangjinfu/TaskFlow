@@ -9,6 +9,7 @@ import cn.hjf.taskflow.sample.test.CompoundFuncTest;
 import cn.hjf.taskflow.sample.test.FuncCreatorTest;
 import cn.hjf.taskflow.sample.test.FuncGraphTest;
 import cn.hjf.taskflow.sample.test.FuncLinkTest;
+import cn.hjf.taskflow.sample.test.NullTest;
 import cn.hjf.taskflow.sample.test.SingleFuncTest;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,5 +34,7 @@ public class MainActivity extends AppCompatActivity {
         new CompoundFuncTest().testData("abcdef");
 
         new FuncCreatorTest().test("hjf");
+
+        new NullTest().test();
     }
 }
