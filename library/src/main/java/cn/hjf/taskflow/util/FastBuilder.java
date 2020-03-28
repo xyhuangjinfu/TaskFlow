@@ -4,7 +4,13 @@ import androidx.annotation.NonNull;
 
 public class FastBuilder {
 
-    public static <R1, RE> IFunc0<RE> unionWithoutStart(IFunc1<R1, RE> end, IFunc1<Void, R1> f1) {
+    /**
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
+
+    public static <R1, RE> IFunc0<RE> unionWithoutStart(IFunc1<R1, RE> end, IFunc0<R1> f1) {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
@@ -18,7 +24,7 @@ public class FastBuilder {
         return b.create();
     }
 
-    public static <R1, R2, RE> IFunc0<RE> unionWithoutStart(IFunc2<R1, R2, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2) {
+    public static <R1, R2, RE> IFunc0<RE> unionWithoutStart(IFunc2<R1, R2, RE> end, IFunc0<R1> f1, IFunc0<R2> f2) {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
@@ -33,7 +39,7 @@ public class FastBuilder {
         return b.create();
     }
 
-    public static <R1, R2, R3, RE> IFunc0<RE> unionWithoutStart(IFunc3<R1, R2, R3, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3) {
+    public static <R1, R2, R3, RE> IFunc0<RE> unionWithoutStart(IFunc3<R1, R2, R3, RE> end, IFunc0<R1> f1, IFunc0<R2> f2, IFunc0<R3> f3) {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
@@ -49,7 +55,7 @@ public class FastBuilder {
         return b.create();
     }
 
-    public static <R1, R2, R3, R4, RE> IFunc0<RE> unionWithoutStart(IFunc4<R1, R2, R3, R4, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3, IFunc1<Void, R4> f4) {
+    public static <R1, R2, R3, R4, RE> IFunc0<RE> unionWithoutStart(IFunc4<R1, R2, R3, R4, RE> end, IFunc0<R1> f1, IFunc0<R2> f2, IFunc0<R3> f3, IFunc0<R4> f4) {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
@@ -66,7 +72,7 @@ public class FastBuilder {
         return b.create();
     }
 
-    public static <R1, R2, R3, R4, R5, RE> IFunc0<RE> unionWithoutStart(IFunc5<R1, R2, R3, R4, R5, RE> end, IFunc1<Void, R1> f1, IFunc1<Void, R2> f2, IFunc1<Void, R3> f3, IFunc1<Void, R4> f4, IFunc1<Void, R5> f5) {
+    public static <R1, R2, R3, R4, R5, RE> IFunc0<RE> unionWithoutStart(IFunc5<R1, R2, R3, R4, R5, RE> end, IFunc0<R1> f1, IFunc0<R2> f2, IFunc0<R3> f3, IFunc0<R4> f4, IFunc0<R5> f5) {
         final IFunc0<Void> start = new Func0<Void>() {
             @NonNull
             @Override
