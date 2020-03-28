@@ -16,7 +16,7 @@ import cn.hjf.taskflow.graph.OnVisitListener;
  */
 public class Engine {
 
-    private static ExecutorService sExecutorService = Executors.newCachedThreadPool();
+    private static ExecutorService sExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     /**
      * Specify the ExecutorService you want to execute your tasks.
