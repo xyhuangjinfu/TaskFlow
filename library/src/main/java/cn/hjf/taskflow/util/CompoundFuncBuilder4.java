@@ -28,6 +28,12 @@ public class CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> extend
      * ***************************************************************************************************************
      */
 
+    public CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> addEnd(IFunc0<Return> end, IFunc<Void> pre1) {
+        checkEnd();
+        mGraphBuilder.addLink(end, pre1);
+        return this;
+    }
+
     public <P> CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> addEnd(IFunc1<P, Return> end, IFunc<P> pre1) {
         checkEnd();
         mGraphBuilder.addLink(end, pre1);
@@ -99,6 +105,11 @@ public class CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> extend
      * //
      * ***************************************************************************************************************
      */
+
+    public CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> addNormal(IFunc0 end, IFunc<Void> pre1) {
+        mGraphBuilder.addLink(end, pre1);
+        return this;
+    }
 
     public <P> CompoundFuncBuilder4<Param1, Param2, Param3, Param4, Return> addNormal(IFunc1<P, ?> end, IFunc<P> pre1) {
         mGraphBuilder.addLink(end, pre1);
