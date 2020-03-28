@@ -1,11 +1,14 @@
 package cn.hjf.taskflow.util;
 
+import androidx.annotation.Nullable;
+
 class FuncTask9 extends FuncTask {
 
     public FuncTask9(Func9 func) {
         super(func);
     }
 
+    @Nullable
     @Override
     public Object process(Object... params) throws Throwable {
         CheckParamUtil.checkParameterCount(getName(), 9, params);

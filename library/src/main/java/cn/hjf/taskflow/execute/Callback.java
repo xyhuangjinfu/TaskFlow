@@ -1,12 +1,15 @@
 package cn.hjf.taskflow.execute;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * The callback of the result of the task execute.
  *
  * @param <T>
  */
 public interface Callback<T> {
-    void onComplete(T t);
+    void onComplete(@Nullable T t);
 
-    void onError(Throwable e);
+    void onError(@NonNull Throwable e);
 }

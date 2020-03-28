@@ -1,6 +1,6 @@
 package cn.hjf.taskflow.core;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -79,6 +79,6 @@ public abstract class Task extends AbsVertex<Task> {
      * @return
      * @throws Throwable
      */
-    @NonNull
+    @Nullable
     public abstract Object process(Object... params) throws Throwable;
 }

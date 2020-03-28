@@ -1,6 +1,6 @@
 package cn.hjf.taskflow.util;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public abstract class Func1<P, R> extends Func<R> implements IFunc1<P, R> {
 
@@ -11,6 +11,6 @@ public abstract class Func1<P, R> extends Func<R> implements IFunc1<P, R> {
         super(name);
     }
 
-    @NonNull
+    @Nullable
     protected abstract R process(P p) throws Throwable;
 }

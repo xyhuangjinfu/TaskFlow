@@ -1,6 +1,7 @@
 package cn.hjf.taskflow.core;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * A special type task, which can create task or task graph at runtime. so it provide the ability to create tasks dynamic.
@@ -17,7 +18,7 @@ public abstract class TaskCreator extends Task {
         super(name);
     }
 
-    @NonNull
+    @Nullable
     @Override
     public final Object process(Object... params) throws Throwable {
         throw new UnsupportedOperationException("don't call process() method on TaskCreator, call createTask() instead.");
