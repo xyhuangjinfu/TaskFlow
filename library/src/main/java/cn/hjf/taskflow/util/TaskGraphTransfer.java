@@ -86,28 +86,35 @@ class TaskGraphTransfer {
         return startAndEnd;
     }
 
-    private static Func[] expand(CompoundFunc iFunc) {
+    private static Func[] expand(CompoundFunc compoundFunc) {
+        if (!compoundFunc.getStart().getPreList().isEmpty()) {
+            throw new RuntimeException("start func of " + compoundFunc + " already have pre func. " + compoundFunc.getStart().getPreList());
+        }
+        if (!compoundFunc.getEnd().getNextList().isEmpty()) {
+            throw new RuntimeException("end func of " + compoundFunc + " already have next func. " + compoundFunc.getEnd().getNextList());
+        }
+
         Map<IFunc, Integer> preLinkMap = new HashMap<>();
         Map<IFunc, Integer> nextLinkMap = new HashMap<>();
 
         //record this compound func's position in it's parents and disconnect them.
-        List<IFunc> preList = iFunc.getPreList();
+        List<IFunc> preList = compoundFunc.getPreList();
         for (IFunc pre : preList) {
-            int index = pre.getNextList().indexOf(iFunc);
-            pre.getNextList().remove(iFunc);
+            int index = pre.getNextList().indexOf(compoundFunc);
+            pre.getNextList().remove(compoundFunc);
             preLinkMap.put(pre, index);
         }
 
         //record this compound func's position in it's children and disconnect them.
-        List<IFunc> nextList = iFunc.getNextList();
+        List<IFunc> nextList = compoundFunc.getNextList();
         for (IFunc next : nextList) {
-            int index = next.getPreList().indexOf(iFunc);
-            next.getPreList().remove(iFunc);
+            int index = next.getPreList().indexOf(compoundFunc);
+            next.getPreList().remove(compoundFunc);
             nextLinkMap.put(next, index);
         }
 
         //do expand
-        Func[] newBound = traverseAndExpand(iFunc.getStart());
+        Func[] newBound = traverseAndExpand(compoundFunc.getStart());
 
         //re-point start, to parents and children.
         IFunc newStart = newBound[0];
@@ -116,8 +123,8 @@ class TaskGraphTransfer {
             int index = e.getValue();
             pre.getNextList().add(index, newStart);
         }
-        newStart.getPreList().addAll(iFunc.getPreList());
-        iFunc.getPreList().clear();
+        newStart.getPreList().addAll(compoundFunc.getPreList());
+        compoundFunc.getPreList().clear();
 
         //re-point end, to parents and children.
         IFunc newEnd = newBound[1];
@@ -126,8 +133,8 @@ class TaskGraphTransfer {
             int index = e.getValue();
             next.getPreList().add(index, newEnd);
         }
-        newEnd.getNextList().addAll(iFunc.getNextList());
-        iFunc.getNextList().clear();
+        newEnd.getNextList().addAll(compoundFunc.getNextList());
+        compoundFunc.getNextList().clear();
 
         return newBound;
     }
