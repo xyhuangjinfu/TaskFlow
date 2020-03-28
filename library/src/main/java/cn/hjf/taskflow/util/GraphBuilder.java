@@ -8,19 +8,17 @@ import cn.hjf.taskflow.graph.OnVisitListener;
 
 class GraphBuilder {
 
-    private IFunc mStart;
-    private IFunc mEnd;
-    private Set<IFunc> mJoinedFuncSet = new HashSet<>();
+    private Set<IFunc> mLinkedFuncSet = new HashSet<>();
     private Set<IFunc> mFuncSet = new HashSet<>();
 
     public IFunc[] getStartAndEnd() {
         IFunc[] startAndEnd = findStartAndEnd();
-        mStart = startAndEnd[0];
-        mEnd = startAndEnd[1];
+        IFunc start = startAndEnd[0];
+        IFunc end = startAndEnd[1];
 
-        checkConnected(mStart, mEnd);
+        checkConnected(start, end);
 
-        return new IFunc[]{mStart, mEnd};
+        return new IFunc[]{start, end};
     }
 
     /**
@@ -102,10 +100,16 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R> void addFunc(IFunc1<R, ?> func, IFunc<R> preFunc) {
-        checkNotJoined(func);
+    /**
+     * ***************************************************************************************************************
+     * //
+     * ***************************************************************************************************************
+     */
 
-        mJoinedFuncSet.add(func);
+    public void addLink(IFunc0 func, IFunc<Void> preFunc) {
+        checkNotLinked(func);
+
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc);
 
@@ -113,10 +117,21 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2> void addFunc(IFunc2<R1, R2, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2) {
-        checkNotJoined(func);
+    public <R> void addLink(IFunc1<R, ?> func, IFunc<R> preFunc) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
+
+        func.after(preFunc);
+
+        mFuncSet.add(preFunc);
+        mFuncSet.add(func);
+    }
+
+    public <R1, R2> void addLink(IFunc2<R1, R2, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2) {
+        checkNotLinked(func);
+
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -126,10 +141,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3> void addFunc(IFunc3<R1, R2, R3, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3) {
-        checkNotJoined(func);
+    public <R1, R2, R3> void addLink(IFunc3<R1, R2, R3, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -141,10 +156,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4> void addFunc(IFunc4<R1, R2, R3, R4, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4> void addLink(IFunc4<R1, R2, R3, R4, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -158,10 +173,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5> void addFunc(IFunc5<R1, R2, R3, R4, R5, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5> void addLink(IFunc5<R1, R2, R3, R4, R5, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -177,10 +192,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6> void addFunc(IFunc6<R1, R2, R3, R4, R5, R6, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5, R6> void addLink(IFunc6<R1, R2, R3, R4, R5, R6, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -198,10 +213,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7> void addFunc(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5, R6, R7> void addLink(IFunc7<R1, R2, R3, R4, R5, R6, R7, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -221,10 +236,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8> void addFunc(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5, R6, R7, R8> void addLink(IFunc8<R1, R2, R3, R4, R5, R6, R7, R8, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -246,10 +261,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> void addFunc(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9> void addLink(IFunc9<R1, R2, R3, R4, R5, R6, R7, R8, R9, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -273,10 +288,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> void addFunc(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9, IFunc<R10> preFunc10) {
-        checkNotJoined(func);
+    public <R1, R2, R3, R4, R5, R6, R7, R8, R9, R10> void addLink(IFunc10<R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, ?> func, IFunc<R1> preFunc1, IFunc<R2> preFunc2, IFunc<R3> preFunc3, IFunc<R4> preFunc4, IFunc<R5> preFunc5, IFunc<R6> preFunc6, IFunc<R7> preFunc7, IFunc<R8> preFunc8, IFunc<R9> preFunc9, IFunc<R10> preFunc10) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         func.after(preFunc1);
         func.after(preFunc2);
@@ -302,10 +317,10 @@ class GraphBuilder {
         mFuncSet.add(func);
     }
 
-    public void addFunc(IFuncN func, IFunc... preFuncs) {
-        checkNotJoined(func);
+    public void addLink(IFuncN func, IFunc... preFuncs) {
+        checkNotLinked(func);
 
-        mJoinedFuncSet.add(func);
+        mLinkedFuncSet.add(func);
 
         for (IFunc f : preFuncs) {
             func.after(f);
@@ -321,9 +336,9 @@ class GraphBuilder {
      * ***************************************************************************************************************
      */
 
-    private void checkNotJoined(IFunc func) {
-        if (mJoinedFuncSet.contains(func)) {
-            throw new IllegalArgumentException("func can not be joined to more than one time, func:" + func);
+    private void checkNotLinked(IFunc func) {
+        if (mLinkedFuncSet.contains(func)) {
+            throw new IllegalArgumentException("func can not be linked more than one time, func:" + func + " already be linked");
         }
     }
 }

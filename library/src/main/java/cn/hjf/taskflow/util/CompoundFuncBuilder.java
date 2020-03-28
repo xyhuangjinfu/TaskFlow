@@ -3,13 +3,11 @@ package cn.hjf.taskflow.util;
 abstract class CompoundFuncBuilder {
 
     protected GraphBuilder mGraphBuilder;
-    protected IFunc mStart;
     protected boolean mHaveEnd = false;
 
     public CompoundFuncBuilder(IFunc start) {
-        mStart = start;
         mGraphBuilder = new GraphBuilder();
-        mGraphBuilder.addFunc(mStart);
+        mGraphBuilder.addFunc(start);
     }
 
     /**
