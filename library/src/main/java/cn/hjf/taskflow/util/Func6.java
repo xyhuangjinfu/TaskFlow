@@ -12,5 +12,5 @@ public abstract class Func6<P1, P2, P3, P4, P5, P6, R> extends Func<R> implement
     }
 
     @Nullable
-    protected abstract R process(P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6) throws Throwable;
+    protected abstract R process(@Nullable P1 p1, @Nullable P2 p2, @Nullable P3 p3, @Nullable P4 p4, @Nullable P5 p5, @Nullable P6 p6) throws Throwable;
 }

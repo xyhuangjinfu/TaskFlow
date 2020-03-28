@@ -12,5 +12,5 @@ public abstract class Func2<P1, P2, R> extends Func<R> implements IFunc2<P1, P2,
     }
 
     @Nullable
-    protected abstract R process(P1 p1, P2 p2) throws Throwable;
+    protected abstract R process(@Nullable P1 p1, @Nullable P2 p2) throws Throwable;
 }
