@@ -14,6 +14,15 @@ We define our graph, which contains only one start node, only one end node, dire
 
 
 # Usage
+
+Add dependency.
+```
+dependencies {
+        implementation 'cn.hjf:taskflow:0.0.1-alpha.2'
+}
+```
+
+
 ## Core Module
 #### 1、create a task.
 Each task have zero to infinite input, and only one output, it should be seen from the method of task.
