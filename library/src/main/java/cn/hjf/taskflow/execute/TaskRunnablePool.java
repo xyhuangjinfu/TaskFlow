@@ -6,8 +6,7 @@ import java.util.Map;
 import cn.hjf.taskflow.core.Task;
 
 /**
- * 在TaskRunnable创建好后，需要等待各个父节点执行成功后传递参数，参数齐了之后会被送走执行。
- * 在等待参数装配的这段时间，在这里暂存。
+ * Each TaskRunnable instance, need to stay here to wait parameters from it's parent, when all parameters complete, it will be remove from here.
  */
 class TaskRunnablePool {
 
