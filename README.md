@@ -18,7 +18,7 @@ We define our graph, which contains only one start node, only one end node, dire
 Add dependency.
 ```
 dependencies {
-        implementation 'cn.hjf:taskflow:0.0.1-alpha.2'
+        implementation 'cn.hjf:taskflow:{latest-version}'
 }
 ```
 
