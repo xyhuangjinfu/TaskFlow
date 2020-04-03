@@ -50,7 +50,7 @@ class TaskRunnable implements Runnable {
     public void run() {
         //check cancel status, avoid to run time-consuming process method.
         if (mSession.isCanceled()) {
-            TaskRunnablePool.remove(mSession);
+            TaskRunnablePool.getInstance().remove(mSession);
             return;
         }
 
@@ -58,7 +58,7 @@ class TaskRunnable implements Runnable {
 
         //check cancel status, avoid to some task add task runnable after other task cleared.
         if (mSession.isCanceled()) {
-            TaskRunnablePool.remove(mSession);
+            TaskRunnablePool.getInstance().remove(mSession);
             return;
         }
     }
@@ -107,20 +107,20 @@ class TaskRunnable implements Runnable {
         for (Task nextTask : mTask.getNextList()) {
             //check cancel status before create new task runnable.
             if (mSession.isCanceled()) {
-                TaskRunnablePool.remove(mSession);
+                TaskRunnablePool.getInstance().remove(mSession);
                 break;
             }
 
-            TaskRunnable nextTaskRunnable = TaskRunnablePool.getOrCreate(mSession, nextTask);
+            TaskRunnable nextTaskRunnable = TaskRunnablePool.getInstance().getOrCreate(mSession, nextTask);
 
             boolean paramsReady = nextTaskRunnable.addParam(mTask.getId(), result);
             if (paramsReady) {
                 //Params ready, remove from waiting area.
-                TaskRunnablePool.remove(mSession, nextTask);
+                TaskRunnablePool.getInstance().remove(mSession, nextTask);
 
                 //check cancel status before execute task runnable.
                 if (mSession.isCanceled()) {
-                    TaskRunnablePool.remove(mSession);
+                    TaskRunnablePool.getInstance().remove(mSession);
                     break;
                 }
 
@@ -148,18 +148,18 @@ class TaskRunnable implements Runnable {
 
         //check cancel status before create task runnable.
         if (mSession.isCanceled()) {
-            TaskRunnablePool.remove(mSession);
+            TaskRunnablePool.getInstance().remove(mSession);
             return null;
         }
 
         //run start
-        TaskRunnable startTaskRunnable = TaskRunnablePool.getOrCreate(mSession, start);
+        TaskRunnable startTaskRunnable = TaskRunnablePool.getInstance().getOrCreate(mSession, start);
         startTaskRunnable.setParams(mParams);
-        TaskRunnablePool.remove(mSession, start);
+        TaskRunnablePool.getInstance().remove(mSession, start);
 
         //check cancel status before execute task runnable.
         if (mSession.isCanceled()) {
-            TaskRunnablePool.remove(mSession);
+            TaskRunnablePool.getInstance().remove(mSession);
             return null;
         }
 

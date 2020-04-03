@@ -12,16 +12,22 @@ import cn.hjf.taskflow.core.Task;
  */
 class TaskRunnablePool {
 
-    private static Lock sLock = new ReentrantLock();
-    private static Map<Session, Map<Long, TaskRunnable>> sTaskRunnableMap = new HashMap<>();
+    private static TaskRunnablePool sInstance = new TaskRunnablePool();
 
-    public static TaskRunnable getOrCreate(Session session, Task task) {
-        sLock.lock();
+    public static TaskRunnablePool getInstance() {
+        return sInstance;
+    }
+
+    private Lock mLock = new ReentrantLock();
+    private Map<Session, Map<Long, TaskRunnable>> mTaskRunnableMap = new HashMap<>();
+
+    public TaskRunnable getOrCreate(Session session, Task task) {
+        mLock.lock();
         try {
             TaskRunnable r;
 
-            if (sTaskRunnableMap.containsKey(session)) {
-                Map<Long, TaskRunnable> map = sTaskRunnableMap.get(session);
+            if (mTaskRunnableMap.containsKey(session)) {
+                Map<Long, TaskRunnable> map = mTaskRunnableMap.get(session);
                 if (map.containsKey(task.getId())) {
                     r = map.get(task.getId());
                 } else {
@@ -33,39 +39,39 @@ class TaskRunnablePool {
                 r = new TaskRunnable(session, task);
                 map.put(task.getId(), r);
 
-                sTaskRunnableMap.put(session, map);
+                mTaskRunnableMap.put(session, map);
             }
 
             return r;
         } finally {
-            sLock.unlock();
+            mLock.unlock();
         }
     }
 
-    public static void remove(Session session, Task task) {
-        sLock.lock();
+    public void remove(Session session, Task task) {
+        mLock.lock();
         try {
-            if (!sTaskRunnableMap.containsKey(session)) {
+            if (!mTaskRunnableMap.containsKey(session)) {
                 return;
             }
 
-            Map<Long, TaskRunnable> map = sTaskRunnableMap.get(session);
+            Map<Long, TaskRunnable> map = mTaskRunnableMap.get(session);
             map.remove(task.getId());
 
             if (map.isEmpty()) {
-                sTaskRunnableMap.remove(session);
+                mTaskRunnableMap.remove(session);
             }
         } finally {
-            sLock.unlock();
+            mLock.unlock();
         }
     }
 
-    public static void remove(Session session) {
-        sLock.lock();
+    public void remove(Session session) {
+        mLock.lock();
         try {
-            sTaskRunnableMap.remove(session);
+            mTaskRunnableMap.remove(session);
         } finally {
-            sLock.unlock();
+            mLock.unlock();
         }
     }
 }
