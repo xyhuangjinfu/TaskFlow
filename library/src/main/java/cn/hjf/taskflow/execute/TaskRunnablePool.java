@@ -35,6 +35,10 @@ class TaskRunnablePool {
     }
 
     public static synchronized void remove(Session session, Task task) {
+        if (!sTaskRunnableMap.containsKey(session)) {
+            return;
+        }
+
         Map<Long, TaskRunnable> map = sTaskRunnableMap.get(session);
         map.remove(task.getId());
 
