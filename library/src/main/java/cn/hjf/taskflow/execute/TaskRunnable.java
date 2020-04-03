@@ -3,6 +3,8 @@ package cn.hjf.taskflow.execute;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import cn.hjf.taskflow.core.Task;
 import cn.hjf.taskflow.core.TaskCreator;
@@ -19,6 +21,7 @@ class TaskRunnable implements Runnable {
     private final Session mSession;
     private Map<Long, Object> mParamMap = new HashMap<>();
     private Object[] mParams;
+    private Lock mParamLock = new ReentrantLock();
 
     public TaskRunnable(Session session, Task task) {
         mTask = task;
@@ -32,9 +35,14 @@ class TaskRunnable implements Runnable {
      * @param param
      * @return when all parameters reay, return true.
      */
-    private synchronized boolean addParam(long preTaskId, Object param) {
-        mParamMap.put(preTaskId, param);
-        return mParamMap.size() == mTask.getPreList().size();
+    private boolean addParam(long preTaskId, Object param) {
+        mParamLock.lock();
+        try {
+            mParamMap.put(preTaskId, param);
+            return mParamMap.size() == mTask.getPreList().size();
+        } finally {
+            mParamLock.unlock();
+        }
     }
 
     /**
@@ -42,8 +50,13 @@ class TaskRunnable implements Runnable {
      *
      * @param params
      */
-    public synchronized void setParams(Object[] params) {
-        mParams = params;
+    public void setParams(Object[] params) {
+        mParamLock.lock();
+        try {
+            mParams = params;
+        } finally {
+            mParamLock.unlock();
+        }
     }
 
     @Override
