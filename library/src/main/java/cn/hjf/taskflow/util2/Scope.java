@@ -122,17 +122,20 @@ public class Scope {
      * <p>
      * ***************************************************************************************************************
      */
-
-    public <P, R> Variable<R> invokeMethod(Method1<P, R> method, Variable<P> v) {
-        return invokeMethodInternal(method, v);
+    public <R> Variable<R> invokeMethod(Method0<R> method) {
+        return invokeMethodInternal(method);
     }
 
-    public <P1, P2, R> Variable<R> invokeMethod(Method2<P1, P2, R> method, Variable<P1> v1, Variable<P2> v2) {
-        return invokeMethodInternal(method, v1, v2);
+    public <P, R> Variable<R> invokeMethod(Method1<P, R> method, Variable<P> param) {
+        return invokeMethodInternal(method, param);
     }
 
-    public <P1, P2, P3, R> Variable<R> invokeMethod(Method3<P1, P2, P3, R> method, Variable<P1> v1, Variable<P2> v2, Variable<P3> v3) {
-        return invokeMethodInternal(method, v1, v2, v3);
+    public <P1, P2, R> Variable<R> invokeMethod(Method2<P1, P2, R> method, Variable<P1> param1, Variable<P2> param2) {
+        return invokeMethodInternal(method, param1, param2);
+    }
+
+    public <P1, P2, P3, R> Variable<R> invokeMethod(Method3<P1, P2, P3, R> method, Variable<P1> param1, Variable<P2> param2, Variable<P3> param3) {
+        return invokeMethodInternal(method, param1, param2, param3);
     }
 
     /**
